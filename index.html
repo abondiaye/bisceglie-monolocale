@@ -22,43 +22,131 @@
     width:100%;
     height:100vh;
     display:flex;
+    flex-direction:column;
     align-items:center;
     justify-content:center;
     overflow:hidden;
   }
-  .section img{
+
+  /* fond flou ambiant derriere la carte */
+  .bgblur{
     position:absolute;
-    top:0;left:0;
+    inset:-30px;
+    background-size:cover;
+    background-position:center;
+    filter:blur(34px) brightness(0.42) saturate(1.25);
+    transform:scale(1.12);
+    z-index:0;
+  }
+  .scrim{
+    position:absolute;
+    inset:0;
+    background:radial-gradient(circle at 50% 40%, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.6) 100%);
+    z-index:1;
+  }
+
+  /* particules dorees flottantes - effet futuriste */
+  .particles{
+    position:absolute;
+    inset:0;
+    z-index:1;
+    pointer-events:none;
+    overflow:hidden;
+  }
+  .particles span{
+    position:absolute;
+    bottom:-10px;
+    width:4px;
+    height:4px;
+    border-radius:50%;
+    background:var(--gold);
+    box-shadow:0 0 8px 2px rgba(201,162,83,0.8);
+    opacity:0;
+    animation:drift 9s linear infinite;
+  }
+  .particles span:nth-child(1){left:8%; animation-delay:0s; animation-duration:8s;}
+  .particles span:nth-child(2){left:22%; animation-delay:1.5s; animation-duration:10s;}
+  .particles span:nth-child(3){left:38%; animation-delay:3s; animation-duration:7.5s;}
+  .particles span:nth-child(4){left:55%; animation-delay:0.7s; animation-duration:9.5s;}
+  .particles span:nth-child(5){left:70%; animation-delay:2.2s; animation-duration:8.5s;}
+  .particles span:nth-child(6){left:84%; animation-delay:4s; animation-duration:11s;}
+  .particles span:nth-child(7){left:94%; animation-delay:1s; animation-duration:9s;}
+  @keyframes drift{
+    0%{ transform:translateY(0) translateX(0); opacity:0; }
+    10%{ opacity:0.9; }
+    80%{ opacity:0.5; }
+    100%{ transform:translateY(-110vh) translateX(18px); opacity:0; }
+  }
+
+  /* carte 3D type tableau */
+  .card-wrap{
+    position:relative;
+    z-index:2;
+    perspective:1400px;
+    width:min(84vw,460px);
+    aspect-ratio:4/5;
+    margin-top:auto;
+  }
+  .card{
+    position:relative;
+    width:100%;
+    height:100%;
+    border-radius:14px;
+    overflow:hidden;
+    transform:rotateY(-10deg) rotateX(3deg) translateZ(0);
+    box-shadow:0 25px 60px -10px rgba(0,0,0,0.7), 0 0 0 1px rgba(201,162,83,0.35);
+    border:2px solid rgba(201,162,83,0.55);
+    transition:transform 1.4s cubic-bezier(.2,.8,.2,1);
+    animation:floatcard 7s ease-in-out infinite;
+  }
+  .section.visible .card{
+    transform:rotateY(0deg) rotateX(0deg) translateZ(0);
+  }
+  @keyframes floatcard{
+    0%,100%{ margin-top:0px; }
+    50%{ margin-top:-10px; }
+  }
+  .card img{
+    position:absolute;
+    inset:0;
     width:100%;
     height:100%;
     object-fit:cover;
-    opacity:1;
-    filter:brightness(0.92);
+    filter:brightness(0.96);
     animation:kenburns 14s ease-in-out infinite alternate;
+  }
+  .card::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.18) 48%, transparent 64%);
+    background-size:220% 220%;
+    background-position:120% 0%;
+    animation:sweep 6s ease-in-out infinite;
+    pointer-events:none;
+  }
+  @keyframes sweep{
+    0%,55%{ background-position:120% 0%; }
+    100%{ background-position:-20% 100%; }
   }
   @keyframes kenburns{
     from{transform:scale(1);}
-    to{transform:scale(1.12);}
+    to{transform:scale(1.1);}
   }
+
   .overlay{
     position:relative;
     z-index:2;
     text-align:center;
     color:var(--cream);
-    padding:0 8%;
+    padding:26px 8% 10%;
     opacity:0;
-    transform:translateY(24px);
-    transition:opacity 1.4s ease 0.3s, transform 1.4s ease 0.3s;
+    transform:translateY(18px);
+    transition:opacity 1.2s ease 0.2s, transform 1.2s ease 0.2s;
   }
   .section.visible .overlay{
     opacity:1;
     transform:translateY(0);
-  }
-  .scrim{
-    position:absolute;
-    inset:0;
-    background:linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.55) 100%);
-    z-index:1;
   }
   .eyebrow{
     font-family:'Helvetica Neue', Arial, sans-serif;
@@ -74,16 +162,16 @@
     line-height:1.15;
   }
   h2{
-    font-size:clamp(22px,4vw,38px);
+    font-size:clamp(20px,4.4vw,32px);
     font-weight:400;
     line-height:1.3;
   }
   p.tag{
     font-family:'Helvetica Neue', Arial, sans-serif;
-    font-size:clamp(13px,1.6vw,16px);
+    font-size:clamp(12px,1.6vw,15px);
     letter-spacing:1px;
-    margin-top:14px;
-    color:rgba(247,243,236,0.85);
+    margin-top:10px;
+    color:rgba(247,243,236,0.8);
   }
   .hero h1{margin-bottom:6px;}
   .hero .addr{
@@ -98,7 +186,6 @@
   }
   .end{
     background:var(--navy);
-    flex-direction:column;
   }
   .end h2{color:var(--cream);}
   .end .heart{
@@ -109,6 +196,41 @@
     margin-top:20px;
     font-family:'Helvetica Neue', Arial, sans-serif;
   }
+
+  /* section carte de localisation */
+  .map-card{
+    position:relative;
+    z-index:2;
+    width:min(90vw,480px);
+    border-radius:14px;
+    overflow:hidden;
+    border:2px solid rgba(201,162,83,0.55);
+    box-shadow:0 25px 60px -10px rgba(0,0,0,0.7), 0 0 0 1px rgba(201,162,83,0.35);
+  }
+  .map-card iframe{
+    display:block;
+    width:100%;
+    height:340px;
+    border:0;
+    filter:grayscale(0.15) contrast(1.05);
+  }
+  .map-pin{
+    position:absolute;
+    top:50%;left:50%;
+    width:14px;height:14px;
+    background:var(--gold);
+    border-radius:50%;
+    box-shadow:0 0 0 0 rgba(201,162,83,0.7);
+    transform:translate(-50%,-50%);
+    animation:pulse 2s infinite;
+    pointer-events:none;
+  }
+  @keyframes pulse{
+    0%{ box-shadow:0 0 0 0 rgba(201,162,83,0.7); }
+    70%{ box-shadow:0 0 0 18px rgba(201,162,83,0); }
+    100%{ box-shadow:0 0 0 0 rgba(201,162,83,0); }
+  }
+
   #soundHint{
     position:fixed;
     bottom:22px;
@@ -144,6 +266,7 @@
 <audio id="bgm" src="assets/musique-italienne.mp3" loop preload="auto" playsinline></audio>
 
 <section class="section hero end" id="s0">
+  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
   <div class="overlay" style="opacity:1;transform:none;">
     <div class="eyebrow">Bisceglie · Puglia</div>
     <h1>Monolocale Arredato<br>nel Centro Storico</h1>
@@ -152,8 +275,10 @@
 </section>
 
 <section class="section" id="s1">
-  <img src="assets/festa-porto.jpg" alt="Festa nel porto di Bisceglie">
+  <div class="bgblur" style="background-image:url('assets/festa-porto.jpg')"></div>
   <div class="scrim"></div>
+  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="card-wrap"><div class="card"><img src="assets/festa-porto.jpg" alt="Festa nel porto di Bisceglie"></div></div>
   <div class="overlay">
     <h2>Il cuore della città<br>si anima ogni sera</h2>
     <p class="tag">A pochi passi dal porto antico</p>
@@ -161,16 +286,20 @@
 </section>
 
 <section class="section" id="s2">
-  <img src="assets/terrazza-serale.jpg" alt="Terrazza serale con luci">
+  <div class="bgblur" style="background-image:url('assets/terrazza-serale.jpg')"></div>
   <div class="scrim"></div>
+  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="card-wrap"><div class="card"><img src="assets/terrazza-serale.jpg" alt="Terrazza serale con luci"></div></div>
   <div class="overlay">
     <h2>Cene sotto le stelle,<br>a due passi da casa</h2>
   </div>
 </section>
 
 <section class="section" id="s3">
-  <img src="assets/caffe-porto.jpg" alt="Caffè sul porto">
+  <div class="bgblur" style="background-image:url('assets/caffe-porto.jpg')"></div>
   <div class="scrim"></div>
+  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="card-wrap"><div class="card"><img src="assets/caffe-porto.jpg" alt="Caffè sul porto"></div></div>
   <div class="overlay">
     <h2>Aperitivo in riva al mare</h2>
     <p class="tag">Il porto turistico, a un passo dalla porta</p>
@@ -178,16 +307,20 @@
 </section>
 
 <section class="section" id="s4">
-  <img src="assets/salotto1.jpg" alt="Salotto del monolocale">
+  <div class="bgblur" style="background-image:url('assets/salotto1.jpg')"></div>
   <div class="scrim"></div>
+  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="card-wrap"><div class="card"><img src="assets/salotto1.jpg" alt="Salotto del monolocale"></div></div>
   <div class="overlay">
     <h2>Un nido accogliente<br>nel centro storico</h2>
   </div>
 </section>
 
 <section class="section" id="s5">
-  <img src="assets/salotto2.jpg" alt="Soggiorno con soppalco">
+  <div class="bgblur" style="background-image:url('assets/salotto2.jpg')"></div>
   <div class="scrim"></div>
+  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="card-wrap"><div class="card"><img src="assets/salotto2.jpg" alt="Soggiorno con soppalco"></div></div>
   <div class="overlay">
     <h2>Ogni dettaglio pensato<br>per il tuo relax</h2>
     <p class="tag">Soppalco · cucina equipata · bagno privato</p>
@@ -195,24 +328,42 @@
 </section>
 
 <section class="section" id="s6">
-  <img src="assets/porto-notte.jpg" alt="Bisceglie by night">
+  <div class="bgblur" style="background-image:url('assets/porto-notte.jpg')"></div>
   <div class="scrim"></div>
+  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="card-wrap"><div class="card"><img src="assets/porto-notte.jpg" alt="Bisceglie by night"></div></div>
   <div class="overlay">
     <h2>Bisceglie by night</h2>
   </div>
 </section>
 
 <section class="section" id="s7">
-  <img src="assets/tramonto.jpg" alt="Tramonto su Bisceglie">
+  <div class="bgblur" style="background-image:url('assets/tramonto.jpg')"></div>
   <div class="scrim"></div>
+  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="card-wrap"><div class="card"><img src="assets/tramonto.jpg" alt="Tramonto su Bisceglie"></div></div>
   <div class="overlay">
     <h2>E il sole tramonta<br>su un'altra giornata perfetta</h2>
   </div>
 </section>
 
+<section class="section end" id="smap">
+  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="overlay" style="padding-bottom:18px;">
+    <div class="eyebrow">Dove si trova</div>
+    <h2>Nel cuore del centro storico</h2>
+  </div>
+  <div class="map-card">
+    <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=16.495,41.236,16.514,41.247&layer=mapnik&marker=41.2412,16.5043" loading="lazy"></iframe>
+  </div>
+</section>
+
 <section class="section end" id="s8">
-  <h2>Bisceglie ti aspetta</h2>
-  <div class="heart">Mare cristallino e storia in un'unica meta</div>
+  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="overlay" style="opacity:1;transform:none;">
+    <h2>Bisceglie ti aspetta</h2>
+    <div class="heart">Mare cristallino e storia in un'unica meta</div>
+  </div>
 </section>
 
 <script>
@@ -227,7 +378,7 @@
 
   // Defilement automatique sans clic (base sur Date.now, insensible au throttling de rAF)
   const scrollEl = document.scrollingElement || document.documentElement;
-  const totalDuration = 42000; // ms pour parcourir toute la page une fois
+  const totalDuration = 48000; // ms pour parcourir toute la page une fois
   const pauseAtEnd = 3200;
   let startTime = Date.now();
   let paused = false;
