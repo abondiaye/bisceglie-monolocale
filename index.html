@@ -236,22 +236,35 @@
     height:auto;
   }
 
-  #soundHint{
+  #controls{
     position:fixed;
-    bottom:22px;
-    left:50%;
-    transform:translateX(-50%);
-    background:rgba(0,0,0,0.55);
-    color:#f7f3ec;
-    font-family:'Helvetica Neue', Arial, sans-serif;
-    font-size:12px;
-    letter-spacing:1px;
-    padding:9px 16px;
-    border-radius:20px;
-    z-index:50;
-    transition:opacity 0.6s ease;
-    pointer-events:none;
+    top:16px;
+    right:16px;
+    z-index:70;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
   }
+  .ctrl-btn{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    border:1.5px solid rgba(201,162,83,0.6);
+    background:rgba(10,10,10,0.55);
+    color:var(--cream);
+    font-family:'Helvetica Neue', Arial, sans-serif;
+    font-size:17px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
+    box-shadow:0 4px 14px rgba(0,0,0,0.4);
+    transition:transform 0.2s ease, border-color 0.3s ease;
+  }
+  .ctrl-btn:active{ transform:scale(0.9); }
+  .ctrl-btn.lang{ font-size:12px; letter-spacing:0.5px; font-weight:bold; font-family:'Helvetica Neue', Arial, sans-serif; }
   #progress{
     position:fixed;
     top:0;left:0;
@@ -266,7 +279,10 @@
 <body>
 
 <div id="progress"></div>
-<div id="soundHint">🔊 tocca lo schermo per attivare l'audio</div>
+<div id="controls">
+  <button id="soundBtn" class="ctrl-btn" aria-label="Attiva/disattiva audio">🔇</button>
+  <button id="langBtn" class="ctrl-btn lang" aria-label="Traduci in francese">FR</button>
+</div>
 
 <audio id="bgm" src="assets/musique-italienne.mp3" loop preload="auto" playsinline></audio>
 
@@ -274,7 +290,7 @@
   <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
   <div class="overlay" style="opacity:1;transform:none;">
     <div class="eyebrow">Bisceglie · Puglia</div>
-    <h1>Monolocale Arredato<br>nel Centro Storico</h1>
+    <h1 class="i18n" data-fr="Monolocale meublé<br>dans le centre historique">Monolocale Arredato<br>nel Centro Storico</h1>
     <div class="addr">VIA PENDIO CAMPANILE, 15</div>
   </div>
 </section>
@@ -285,8 +301,8 @@
   <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
   <div class="card-wrap"><div class="card"><img src="assets/festa-porto.jpg" alt="Festa nel porto di Bisceglie"></div></div>
   <div class="overlay">
-    <h2>Il cuore della città<br>si anima ogni sera</h2>
-    <p class="tag">A pochi passi dal porto antico</p>
+    <h2 class="i18n" data-fr="Le cœur de la ville<br>s'anime chaque soir">Il cuore della città<br>si anima ogni sera</h2>
+    <p class="tag i18n" data-fr="À deux pas du port ancien">A pochi passi dal porto antico</p>
   </div>
 </section>
 
@@ -296,7 +312,7 @@
   <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
   <div class="card-wrap"><div class="card"><img src="assets/terrazza-serale.jpg" alt="Terrazza serale con luci"></div></div>
   <div class="overlay">
-    <h2>Cene sotto le stelle,<br>a due passi da casa</h2>
+    <h2 class="i18n" data-fr="Dîners sous les étoiles,<br>à deux pas de la maison">Cene sotto le stelle,<br>a due passi da casa</h2>
   </div>
 </section>
 
@@ -306,8 +322,8 @@
   <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
   <div class="card-wrap"><div class="card"><img src="assets/caffe-porto.jpg" alt="Caffè sul porto"></div></div>
   <div class="overlay">
-    <h2>Aperitivo in riva al mare</h2>
-    <p class="tag">Il porto turistico, a un passo dalla porta</p>
+    <h2 class="i18n" data-fr="Apéritif au bord de la mer">Aperitivo in riva al mare</h2>
+    <p class="tag i18n" data-fr="Le port touristique, à un pas de la porte">Il porto turistico, a un passo dalla porta</p>
   </div>
 </section>
 
@@ -317,8 +333,8 @@
   <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
   <div class="card-wrap"><div class="card"><img src="assets/porto-tramonto.jpg" alt="Tramonto sul porto di Bisceglie"></div></div>
   <div class="overlay">
-    <h2>Un porto da cartolina</h2>
-    <p class="tag">A pochi minuti a piedi da casa</p>
+    <h2 class="i18n" data-fr="Un port de carte postale">Un porto da cartolina</h2>
+    <p class="tag i18n" data-fr="À quelques minutes à pied de chez vous">A pochi minuti a piedi da casa</p>
   </div>
 </section>
 
@@ -328,8 +344,8 @@
   <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
   <div class="card-wrap"><div class="card"><img src="assets/caffe-cornetto.jpg" alt="Cornetto e caffè nel centro storico"></div></div>
   <div class="overlay">
-    <h2>Colazione come un vero italiano</h2>
-    <p class="tag">Cornetto, caffè e dolce vita</p>
+    <h2 class="i18n" data-fr="Petit-déjeuner comme un vrai italien">Colazione come un vero italiano</h2>
+    <p class="tag i18n" data-fr="Cornetto, café et dolce vita">Cornetto, caffè e dolce vita</p>
   </div>
 </section>
 
@@ -339,7 +355,7 @@
   <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
   <div class="card-wrap"><div class="card"><img src="assets/spiaggia.jpg" alt="Spiaggia vicino a Bisceglie"></div></div>
   <div class="overlay">
-    <h2>Acque cristalline a due passi</h2>
+    <h2 class="i18n" data-fr="Eaux cristallines à deux pas">Acque cristalline a due passi</h2>
   </div>
 </section>
 
@@ -349,7 +365,7 @@
   <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
   <div class="card-wrap"><div class="card"><img src="assets/monumento.jpg" alt="Monumento ai Caduti, Bisceglie" style="object-position:center 70%"></div></div>
   <div class="overlay">
-    <h2>Passeggiate tra storia e natura</h2>
+    <h2 class="i18n" data-fr="Promenades entre histoire et nature">Passeggiate tra storia e natura</h2>
   </div>
 </section>
 
@@ -359,7 +375,7 @@
   <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
   <div class="card-wrap"><div class="card"><img src="assets/porto-giorno.jpg" alt="Porto di Bisceglie di giorno" style="object-position:center 75%"></div></div>
   <div class="overlay">
-    <h2>Il porto antico, di giorno</h2>
+    <h2 class="i18n" data-fr="Le port ancien, le jour">Il porto antico, di giorno</h2>
   </div>
 </section>
 
@@ -369,7 +385,7 @@
   <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
   <div class="card-wrap"><div class="card"><img src="assets/cavalluccio.jpg" alt="Statua del cavalluccio marino sul porto" style="object-position:center 65%"></div></div>
   <div class="overlay">
-    <h2>Il simbolo del porto</h2>
+    <h2 class="i18n" data-fr="Le symbole du port">Il simbolo del porto</h2>
   </div>
 </section>
 
@@ -379,7 +395,7 @@
   <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
   <div class="card-wrap"><div class="card"><img src="assets/lungomare-sera.jpg" alt="Lungomare illuminato la sera" style="object-position:center 70%"></div></div>
   <div class="overlay">
-    <h2>Passeggiate al tramonto<br>sul lungomare</h2>
+    <h2 class="i18n" data-fr="Promenades au coucher du soleil<br>sur le front de mer">Passeggiate al tramonto<br>sul lungomare</h2>
   </div>
 </section>
 
@@ -389,7 +405,7 @@
   <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
   <div class="card-wrap"><div class="card"><img src="assets/salotto1.jpg" alt="Salotto del monolocale"></div></div>
   <div class="overlay">
-    <h2>Un nido accogliente<br>nel centro storico</h2>
+    <h2 class="i18n" data-fr="Un nid douillet<br>dans le centre historique">Un nido accogliente<br>nel centro storico</h2>
   </div>
 </section>
 
@@ -399,8 +415,8 @@
   <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
   <div class="card-wrap"><div class="card"><img src="assets/salotto2.jpg" alt="Soggiorno con soppalco"></div></div>
   <div class="overlay">
-    <h2>Ogni dettaglio pensato<br>per il tuo relax</h2>
-    <p class="tag">Soppalco · cucina equipata · bagno privato</p>
+    <h2 class="i18n" data-fr="Chaque détail pensé<br>pour votre confort">Ogni dettaglio pensato<br>per il tuo relax</h2>
+    <p class="tag i18n" data-fr="Mezzanine · cuisine équipée · salle de bain privée">Soppalco · cucina equipata · bagno privato</p>
   </div>
 </section>
 
@@ -420,15 +436,15 @@
   <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
   <div class="card-wrap"><div class="card"><img src="assets/tramonto.jpg" alt="Tramonto su Bisceglie"></div></div>
   <div class="overlay">
-    <h2>E il sole tramonta<br>su un'altra giornata perfetta</h2>
+    <h2 class="i18n" data-fr="Et le soleil se couche<br>sur une autre journée parfaite">E il sole tramonta<br>su un'altra giornata perfetta</h2>
   </div>
 </section>
 
 <section class="section end" id="smap">
   <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
   <div class="overlay" style="padding-bottom:18px;">
-    <div class="eyebrow">Dove si trova</div>
-    <h2>Nel cuore del centro storico</h2>
+    <div class="eyebrow i18n" data-fr="Où se trouve">Dove si trova</div>
+    <h2 class="i18n" data-fr="Au cœur du centre historique">Nel cuore del centro storico</h2>
   </div>
   <div class="map-card">
     <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=16.495,41.236,16.514,41.247&layer=mapnik&marker=41.2412,16.5043" loading="lazy"></iframe>
@@ -438,8 +454,8 @@
 <section class="section end" id="splan">
   <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
   <div class="overlay" style="padding-bottom:6px;">
-    <div class="eyebrow">La pianta</div>
-    <h2>Tutto su un unico livello,<br>più soppalco</h2>
+    <div class="eyebrow i18n" data-fr="Le plan">La pianta</div>
+    <h2 class="i18n" data-fr="Tout sur un seul niveau,<br>plus mezzanine">Tutto su un unico livello,<br>più soppalco</h2>
   </div>
   <div class="map-card plan-card">
     <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pianta del monolocale">
@@ -485,14 +501,14 @@
       <text x="38" y="276" text-anchor="middle" fill="#f7f3ec" font-size="9" font-family="Helvetica, Arial, sans-serif" letter-spacing="1">INGRESSO</text>
     </svg>
   </div>
-  <p class="tag" style="margin-top:14px;">Pianta indicativa · non in scala</p>
+  <p class="tag i18n" data-fr="Plan indicatif · pas à l'échelle" style="margin-top:14px;">Pianta indicativa · non in scala</p>
 </section>
 
 <section class="section end" id="s8">
   <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
   <div class="overlay" style="opacity:1;transform:none;">
-    <h2>Bisceglie ti aspetta</h2>
-    <div class="heart">Mare cristallino e storia in un'unica meta</div>
+    <h2 class="i18n" data-fr="Bisceglie vous attend">Bisceglie ti aspetta</h2>
+    <div class="heart i18n" data-fr="Mer cristalline et histoire en une seule destination">Mare cristallino e storia in un'unica meta</div>
   </div>
 </section>
 
@@ -548,21 +564,46 @@
   window.addEventListener('wheel', onUserScroll, {passive:true});
   window.addEventListener('touchmove', onUserScroll, {passive:true});
 
-  // Musique de fond : tentative de lecture automatique
+  // Musique de fond : bouton marche / arret
   const bgm = document.getElementById('bgm');
-  const hint = document.getElementById('soundHint');
+  const soundBtn = document.getElementById('soundBtn');
   bgm.volume = 0.55;
-  const tryPlay = ()=> bgm.play().catch(()=>{});
-  tryPlay();
-  setTimeout(()=>{
-    if(bgm.paused){ hint.style.opacity = '1'; }
-    else { hint.style.opacity = '0'; }
-  }, 800);
-  ['click','touchstart'].forEach(evt=>{
-    window.addEventListener(evt, ()=>{
-      tryPlay();
-      hint.style.opacity = '0';
-    }, {once:true});
+  let soundOn = false;
+
+  function setSoundUI(){
+    soundBtn.textContent = soundOn ? '🔊' : '🔇';
+  }
+  function tryAutoplay(){
+    bgm.play().then(()=>{ soundOn = true; setSoundUI(); }).catch(()=>{ soundOn = false; setSoundUI(); });
+  }
+  tryAutoplay();
+  setSoundUI();
+
+  soundBtn.addEventListener('click', ()=>{
+    if(soundOn){
+      bgm.pause();
+      soundOn = false;
+    } else {
+      bgm.play().catch(()=>{});
+      soundOn = true;
+    }
+    setSoundUI();
+  });
+
+  // Bouton de traduction italien / francais
+  const langBtn = document.getElementById('langBtn');
+  const i18nEls = document.querySelectorAll('.i18n');
+  let isFrench = false;
+
+  i18nEls.forEach(el=>{ el.dataset.it = el.innerHTML; });
+
+  langBtn.addEventListener('click', ()=>{
+    isFrench = !isFrench;
+    i18nEls.forEach(el=>{
+      el.innerHTML = isFrench ? el.dataset.fr : el.dataset.it;
+    });
+    langBtn.textContent = isFrench ? 'IT' : 'FR';
+    document.documentElement.lang = isFrench ? 'fr' : 'it';
   });
 </script>
 
