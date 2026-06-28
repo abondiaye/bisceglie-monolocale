@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Bisceglie · Monolocale nel Centro Storico</title>
+<style>
+  :root{
+    --navy:#1b3a5c;
+    --cream:#f7f3ec;
+    --gold:#c9a253;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{
+    background:#0a0a0a;
+    font-family:'Georgia', 'Times New Roman', serif;
+    overflow-x:hidden;
+    scroll-behavior:smooth;
+  }
+  .section{
+    position:relative;
+    width:100%;
+    height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
+  .section img{
+    position:absolute;
+    top:0;left:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    opacity:1;
+    filter:brightness(0.92);
+    animation:kenburns 14s ease-in-out infinite alternate;
+  }
+  @keyframes kenburns{
+    from{transform:scale(1);}
+    to{transform:scale(1.12);}
+  }
+  .overlay{
+    position:relative;
+    z-index:2;
+    text-align:center;
+    color:var(--cream);
+    padding:0 8%;
+    opacity:0;
+    transform:translateY(24px);
+    transition:opacity 1.4s ease 0.3s, transform 1.4s ease 0.3s;
+  }
+  .section.visible .overlay{
+    opacity:1;
+    transform:translateY(0);
+  }
+  .scrim{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.55) 100%);
+    z-index:1;
+  }
+  .eyebrow{
+    font-family:'Helvetica Neue', Arial, sans-serif;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    font-size:13px;
+    color:var(--gold);
+    margin-bottom:14px;
+  }
+  h1{
+    font-size:clamp(32px,6vw,64px);
+    font-weight:400;
+    line-height:1.15;
+  }
+  h2{
+    font-size:clamp(22px,4vw,38px);
+    font-weight:400;
+    line-height:1.3;
+  }
+  p.tag{
+    font-family:'Helvetica Neue', Arial, sans-serif;
+    font-size:clamp(13px,1.6vw,16px);
+    letter-spacing:1px;
+    margin-top:14px;
+    color:rgba(247,243,236,0.85);
+  }
+  .hero h1{margin-bottom:6px;}
+  .hero .addr{
+    margin-top:22px;
+    font-family:'Helvetica Neue', Arial, sans-serif;
+    font-size:14px;
+    letter-spacing:2px;
+    color:var(--gold);
+    border-top:1px solid rgba(201,162,83,0.5);
+    padding-top:14px;
+    display:inline-block;
+  }
+  .end{
+    background:var(--navy);
+    flex-direction:column;
+  }
+  .end h2{color:var(--cream);}
+  .end .heart{
+    font-size:13px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-top:20px;
+    font-family:'Helvetica Neue', Arial, sans-serif;
+  }
+  #soundHint{
+    position:fixed;
+    bottom:22px;
+    left:50%;
+    transform:translateX(-50%);
+    background:rgba(0,0,0,0.55);
+    color:#f7f3ec;
+    font-family:'Helvetica Neue', Arial, sans-serif;
+    font-size:12px;
+    letter-spacing:1px;
+    padding:9px 16px;
+    border-radius:20px;
+    z-index:50;
+    transition:opacity 0.6s ease;
+    pointer-events:none;
+  }
+  #progress{
+    position:fixed;
+    top:0;left:0;
+    height:3px;
+    background:var(--gold);
+    z-index:60;
+    width:0%;
+    transition:width 0.2s linear;
+  }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<div id="soundHint">🔊 tocca lo schermo per attivare l'audio</div>
+
+<audio id="bgm" src="assets/musique-italienne.mp3" loop preload="auto" playsinline></audio>
+
+<section class="section hero end" id="s0">
+  <div class="overlay" style="opacity:1;transform:none;">
+    <div class="eyebrow">Bisceglie · Puglia</div>
+    <h1>Monolocale Arredato<br>nel Centro Storico</h1>
+    <div class="addr">VIA PENDIO CAMPANILE, 15</div>
+  </div>
+</section>
+
+<section class="section" id="s1">
+  <img src="assets/festa-porto.jpg" alt="Festa nel porto di Bisceglie">
+  <div class="scrim"></div>
+  <div class="overlay">
+    <h2>Il cuore della città<br>si anima ogni sera</h2>
+    <p class="tag">A pochi passi dal porto antico</p>
+  </div>
+</section>
+
+<section class="section" id="s2">
+  <img src="assets/terrazza-serale.jpg" alt="Terrazza serale con luci">
+  <div class="scrim"></div>
+  <div class="overlay">
+    <h2>Cene sotto le stelle,<br>a due passi da casa</h2>
+  </div>
+</section>
+
+<section class="section" id="s3">
+  <img src="assets/caffe-porto.jpg" alt="Caffè sul porto">
+  <div class="scrim"></div>
+  <div class="overlay">
+    <h2>Aperitivo in riva al mare</h2>
+    <p class="tag">Il porto turistico, a un passo dalla porta</p>
+  </div>
+</section>
+
+<section class="section" id="s4">
+  <img src="assets/salotto1.jpg" alt="Salotto del monolocale">
+  <div class="scrim"></div>
+  <div class="overlay">
+    <h2>Un nido accogliente<br>nel centro storico</h2>
+  </div>
+</section>
+
+<section class="section" id="s5">
+  <img src="assets/salotto2.jpg" alt="Soggiorno con soppalco">
+  <div class="scrim"></div>
+  <div class="overlay">
+    <h2>Ogni dettaglio pensato<br>per il tuo relax</h2>
+    <p class="tag">Soppalco · cucina equipata · bagno privato</p>
+  </div>
+</section>
+
+<section class="section" id="s6">
+  <img src="assets/porto-notte.jpg" alt="Bisceglie by night">
+  <div class="scrim"></div>
+  <div class="overlay">
+    <h2>Bisceglie by night</h2>
+  </div>
+</section>
+
+<section class="section" id="s7">
+  <img src="assets/tramonto.jpg" alt="Tramonto su Bisceglie">
+  <div class="scrim"></div>
+  <div class="overlay">
+    <h2>E il sole tramonta<br>su un'altra giornata perfetta</h2>
+  </div>
+</section>
+
+<section class="section end" id="s8">
+  <h2>Bisceglie ti aspetta</h2>
+  <div class="heart">Mare cristallino e storia in un'unica meta</div>
+</section>
+
+<script>
+  const sections = document.querySelectorAll('.section');
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('visible'); }
+      else { e.target.classList.remove('visible'); }
+    });
+  }, {threshold:0.45});
+  sections.forEach(s=>observer.observe(s));
+
+  // Defilement automatique sans clic (base sur Date.now, insensible au throttling de rAF)
+  const scrollEl = document.scrollingElement || document.documentElement;
+  const totalDuration = 42000; // ms pour parcourir toute la page une fois
+  const pauseAtEnd = 3200;
+  let startTime = Date.now();
+  let paused = false;
+
+  function tick(){
+    const maxScroll = scrollEl.scrollHeight - window.innerHeight;
+    const elapsed = Date.now() - startTime;
+
+    if(elapsed <= totalDuration){
+      if(!paused){
+        const progress = Math.min(elapsed/totalDuration, 1);
+        scrollEl.scrollTop = progress * maxScroll;
+        document.getElementById('progress').style.width = (progress*100)+'%';
+      }
+    } else if(elapsed > totalDuration + pauseAtEnd){
+      startTime = Date.now();
+      scrollEl.scrollTop = 0;
+    }
+  }
+  setInterval(tick, 40);
+
+  // Pause de l'auto-scroll si l'utilisateur prend la main (scroll/touch manuel)
+  let userTimeout;
+  function onUserScroll(){
+    if(!paused){
+      paused = true;
+    }
+    clearTimeout(userTimeout);
+    userTimeout = setTimeout(()=>{
+      paused = false;
+      // reprend la progression a partir de la position actuelle
+      const maxScroll = scrollEl.scrollHeight - window.innerHeight;
+      const currentProgress = scrollEl.scrollTop / maxScroll;
+      startTime = Date.now() - currentProgress * totalDuration;
+    }, 2500);
+  }
+  window.addEventListener('wheel', onUserScroll, {passive:true});
+  window.addEventListener('touchmove', onUserScroll, {passive:true});
+
+  // Musique de fond : tentative de lecture automatique
+  const bgm = document.getElementById('bgm');
+  const hint = document.getElementById('soundHint');
+  bgm.volume = 0.55;
+  const tryPlay = ()=> bgm.play().catch(()=>{});
+  tryPlay();
+  setTimeout(()=>{
+    if(bgm.paused){ hint.style.opacity = '1'; }
+    else { hint.style.opacity = '0'; }
+  }, 800);
+  ['click','touchstart'].forEach(evt=>{
+    window.addEventListener(evt, ()=>{
+      tryPlay();
+      hint.style.opacity = '0';
+    }, {once:true});
+  });
+</script>
+
+</body>
+</html>
