@@ -26,6 +26,7 @@
     align-items:center;
     justify-content:center;
     overflow:hidden;
+    gap:6px;
   }
 
   /* fond flou ambiant derriere la carte */
@@ -83,9 +84,10 @@
     position:relative;
     z-index:2;
     perspective:1400px;
-    width:min(84vw,460px);
+    width:min(80vw,420px);
+    max-height:54vh;
     aspect-ratio:4/5;
-    margin-top:auto;
+    margin:0 auto;
   }
   .card{
     position:relative;
@@ -93,18 +95,14 @@
     height:100%;
     border-radius:14px;
     overflow:hidden;
-    transform:rotateY(-10deg) rotateX(3deg) translateZ(0);
+    transform:translateY(0) translateZ(0);
     box-shadow:0 25px 60px -10px rgba(0,0,0,0.7), 0 0 0 1px rgba(201,162,83,0.35);
     border:2px solid rgba(201,162,83,0.55);
-    transition:transform 1.4s cubic-bezier(.2,.8,.2,1);
     animation:floatcard 7s ease-in-out infinite;
   }
-  .section.visible .card{
-    transform:rotateY(0deg) rotateX(0deg) translateZ(0);
-  }
   @keyframes floatcard{
-    0%,100%{ margin-top:0px; }
-    50%{ margin-top:-10px; }
+    0%,100%{ transform:translateY(0) translateZ(0); }
+    50%{ transform:translateY(-10px) translateZ(0); }
   }
   .card img{
     position:absolute;
@@ -139,10 +137,9 @@
     z-index:2;
     text-align:center;
     color:var(--cream);
-    padding:26px 8% 10%;
-    opacity:0;
-    transform:translateY(18px);
-    transition:opacity 1.2s ease 0.2s, transform 1.2s ease 0.2s;
+    padding:10px 8% 0;
+    width:100%;
+    opacity:1;
   }
   .section.visible .overlay{
     opacity:1;
@@ -229,6 +226,14 @@
     0%{ box-shadow:0 0 0 0 rgba(201,162,83,0.7); }
     70%{ box-shadow:0 0 0 18px rgba(201,162,83,0); }
     100%{ box-shadow:0 0 0 0 rgba(201,162,83,0); }
+  }
+  .plan-card{
+    width:min(90vw,420px);
+  }
+  .plan-card svg{
+    display:block;
+    width:100%;
+    height:auto;
   }
 
   #soundHint{
@@ -358,6 +363,59 @@
   </div>
 </section>
 
+<section class="section end" id="splan">
+  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="overlay" style="padding-bottom:6px;">
+    <div class="eyebrow">La pianta</div>
+    <h2>Tutto su un unico livello,<br>più soppalco</h2>
+  </div>
+  <div class="map-card plan-card">
+    <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pianta del monolocale">
+      <rect x="0" y="0" width="400" height="300" fill="#0f2540"/>
+      <rect x="20" y="20" width="360" height="260" fill="none" stroke="#c9a253" stroke-width="3"/>
+
+      <!-- finestra -->
+      <rect x="150" y="14" width="60" height="10" fill="#c9a253"/>
+      <text x="180" y="10" text-anchor="middle" fill="#f7f3ec" font-size="9" font-family="Helvetica, Arial, sans-serif" letter-spacing="1">FINESTRA</text>
+
+      <!-- angolo cottura -->
+      <rect x="32" y="32" width="90" height="46" fill="none" stroke="#9fb8cf" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <text x="77" y="60" text-anchor="middle" fill="#f7f3ec" font-size="11" font-family="Helvetica, Arial, sans-serif">Cucina</text>
+
+      <!-- zona soggiorno -->
+      <rect x="140" y="110" width="140" height="90" fill="none" stroke="#9fb8cf" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <text x="210" y="158" text-anchor="middle" fill="#f7f3ec" font-size="11" font-family="Helvetica, Arial, sans-serif">Soggiorno</text>
+
+      <!-- bagno -->
+      <rect x="296" y="200" width="64" height="60" fill="none" stroke="#9fb8cf" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <text x="328" y="234" text-anchor="middle" fill="#f7f3ec" font-size="10" font-family="Helvetica, Arial, sans-serif">Bagno</text>
+
+      <!-- scala verso soppalco -->
+      <g>
+        <line x1="300" y1="32" x2="360" y2="32" stroke="#c9a253" stroke-width="1.5"/>
+        <line x1="300" y1="42" x2="360" y2="42" stroke="#c9a253" stroke-width="1.5"/>
+        <line x1="300" y1="52" x2="360" y2="52" stroke="#c9a253" stroke-width="1.5"/>
+        <line x1="300" y1="62" x2="360" y2="62" stroke="#c9a253" stroke-width="1.5"/>
+        <line x1="300" y1="72" x2="360" y2="72" stroke="#c9a253" stroke-width="1.5"/>
+      </g>
+      <text x="330" y="95" text-anchor="middle" fill="#c9a253" font-size="10" font-family="Helvetica, Arial, sans-serif">Scala</text>
+
+      <!-- soppalco (sopra, indicato in tratteggio dorato) -->
+      <rect x="270" y="20" width="110" height="80" fill="rgba(201,162,83,0.08)" stroke="#c9a253" stroke-width="1.5" stroke-dasharray="6,4"/>
+      <text x="325" y="14" text-anchor="middle" fill="#c9a253" font-size="9" font-family="Helvetica, Arial, sans-serif" letter-spacing="1">SOPPALCO LETTO (sopra)</text>
+
+      <!-- armadio -->
+      <rect x="270" y="105" width="50" height="20" fill="none" stroke="#9fb8cf" stroke-width="1.5"/>
+      <text x="295" y="118" text-anchor="middle" fill="#f7f3ec" font-size="8" font-family="Helvetica, Arial, sans-serif">Armadio</text>
+
+      <!-- ingresso -->
+      <rect x="20" y="252" width="36" height="6" fill="#c9a253"/>
+      <text x="38" y="276" text-anchor="middle" fill="#f7f3ec" font-size="9" font-family="Helvetica, Arial, sans-serif" letter-spacing="1">INGRESSO</text>
+    </svg>
+  </div>
+  <p class="tag" style="margin-top:14px;">Pianta indicativa · non in scala</p>
+</section>
+
 <section class="section end" id="s8">
   <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
   <div class="overlay" style="opacity:1;transform:none;">
@@ -378,7 +436,7 @@
 
   // Defilement automatique sans clic (base sur Date.now, insensible au throttling de rAF)
   const scrollEl = document.scrollingElement || document.documentElement;
-  const totalDuration = 48000; // ms pour parcourir toute la page une fois
+  const totalDuration = 53000; // ms pour parcourir toute la page une fois
   const pauseAtEnd = 3200;
   let startTime = Date.now();
   let paused = false;
@@ -388,7 +446,7 @@
     const elapsed = Date.now() - startTime;
 
     if(elapsed <= totalDuration){
-      if(!paused){
+      if(!paused && !window.__pauseAutoscroll){
         const progress = Math.min(elapsed/totalDuration, 1);
         scrollEl.scrollTop = progress * maxScroll;
         document.getElementById('progress').style.width = (progress*100)+'%';
