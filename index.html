@@ -286,6 +286,16 @@
 
 <audio id="bgm" src="assets/musique-italienne.mp3" loop preload="auto" playsinline></audio>
 
+<section class="section" id="s0b">
+  <div class="bgblur" style="background-image:url('assets/torre-pietra.jpg')"></div>
+  <div class="scrim"></div>
+  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="card-wrap"><div class="card"><img src="assets/torre-pietra.jpg" alt="Torre in pietra vicino a Bisceglie"></div></div>
+  <div class="overlay">
+    <h2 class="i18n" data-fr="À l'aventure dans la campagne des Pouilles">All'avventura nella campagna pugliese</h2>
+  </div>
+</section>
+
 <section class="section" id="s1">
   <div class="bgblur" style="background-image:url('assets/festa-porto.jpg')"></div>
   <div class="scrim"></div>
@@ -589,7 +599,7 @@
 
   // Defilement automatique sans clic (base sur Date.now, insensible au throttling de rAF)
   const scrollEl = document.scrollingElement || document.documentElement;
-  const totalDuration = 120000; // ms pour parcourir toute la page une fois
+  const totalDuration = 125000; // ms pour parcourir toute la page une fois
   const pauseAtEnd = 3200;
   let startTime = Date.now();
   let paused = false;
