@@ -389,6 +389,12 @@
   </head>
   <body>
     <div id="progress"></div>
+    <div id="pauseIndicator" style="
+      position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+      background:rgba(0,0,0,0.6);color:#c9a253;font-size:13px;
+      padding:7px 18px;border-radius:20px;letter-spacing:1px;
+      pointer-events:none;opacity:0;transition:opacity 0.3s;z-index:999;
+    ">⏸ Défilement en pause · reprend dans 5s</div>
     <div id="controls">
       <button
         id="soundBtn"
@@ -1321,23 +1327,31 @@
       }
       setInterval(tick, 40);
 
-      // Pause de l'auto-scroll si l'utilisateur prend la main (scroll/touch manuel)
+      // Pause / reprise manuelle
+      const pauseIndicator = document.getElementById("pauseIndicator");
       let userTimeout;
-      function onUserScroll() {
-        if (!paused) {
-          paused = true;
-        }
-        clearTimeout(userTimeout);
-        userTimeout = setTimeout(() => {
-          paused = false;
-          // reprend la progression a partir de la position actuelle
-          const maxScroll = scrollEl.scrollHeight - window.innerHeight;
-          const currentProgress = scrollEl.scrollTop / maxScroll;
-          startTime = Date.now() - currentProgress * totalDuration;
-        }, 8000); // 8s avant de reprendre apres scroll manuel
+
+      function resumeAuto() {
+        paused = false;
+        const maxScroll = scrollEl.scrollHeight - window.innerHeight;
+        const currentProgress = scrollEl.scrollTop / maxScroll;
+        startTime = Date.now() - currentProgress * totalDuration;
+        if (pauseIndicator) pauseIndicator.style.opacity = "0";
       }
-      window.addEventListener("wheel", onUserScroll, { passive: true });
-      window.addEventListener("touchmove", onUserScroll, { passive: true });
+
+      function onUserInteraction() {
+        paused = true;
+        if (pauseIndicator) pauseIndicator.style.opacity = "1";
+        clearTimeout(userTimeout);
+        userTimeout = setTimeout(resumeAuto, 5000); // reprend après 5s d'inactivité
+      }
+
+      window.addEventListener("wheel", onUserInteraction, { passive: true });
+      window.addEventListener("touchstart", onUserInteraction, { passive: true });
+      window.addEventListener("touchmove", onUserInteraction, { passive: true });
+      window.addEventListener("keydown", (e) => {
+        if (["ArrowUp","ArrowDown","PageUp","PageDown"].includes(e.key)) onUserInteraction();
+      });
 
       // Musique de fond : bouton marche / arret
       const bgm = document.getElementById("bgm");
