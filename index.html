@@ -1,777 +1,1397 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="it">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Bisceglie · Monolocale nel Centro Storico</title>
-<style>
-  :root{
-    --navy:#1b3a5c;
-    --cream:#f7f3ec;
-    --gold:#c9a253;
-  }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  html,body{
-    background:#0a0a0a;
-    font-family:'Georgia', 'Times New Roman', serif;
-    overflow-x:hidden;
-    scroll-behavior:smooth;
-  }
-  .section{
-    position:relative;
-    width:100%;
-    height:100vh;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    overflow:hidden;
-    gap:6px;
-  }
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Bisceglie · Monolocale nel Centro Storico</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+  <style>
+      :root {
+        --navy: #1b3a5c;
+        --cream: #f7f3ec;
+        --gold: #c9a253;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        background: #0a0a0a;
+        font-family: "Georgia", "Times New Roman", serif;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+      }
+      .section {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        gap: 6px;
+      }
 
-  /* fond flou ambiant derriere la carte */
-  .bgblur{
-    position:absolute;
-    inset:-30px;
-    background-size:cover;
-    background-position:center;
-    filter:blur(34px) brightness(0.42) saturate(1.25);
-    transform:scale(1.12);
-    z-index:0;
-  }
-  .scrim{
-    position:absolute;
-    inset:0;
-    background:radial-gradient(circle at 50% 40%, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.6) 100%);
-    z-index:1;
-  }
+      /* fond flou ambiant derriere la carte */
+      .bgblur {
+        position: absolute;
+        inset: -30px;
+        background-size: cover;
+        background-position: center;
+        filter: blur(34px) brightness(0.42) saturate(1.25);
+        transform: scale(1.12);
+        z-index: 0;
+      }
+      .scrim {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at 50% 40%,
+          rgba(0, 0, 0, 0.05) 0%,
+          rgba(0, 0, 0, 0.6) 100%
+        );
+        z-index: 1;
+      }
 
-  /* particules dorees flottantes - effet futuriste */
-  .particles{
-    position:absolute;
-    inset:0;
-    z-index:1;
-    pointer-events:none;
-    overflow:hidden;
-  }
-  .particles span{
-    position:absolute;
-    bottom:-10px;
-    width:4px;
-    height:4px;
-    border-radius:50%;
-    background:var(--gold);
-    box-shadow:0 0 8px 2px rgba(201,162,83,0.8);
-    opacity:0;
-    animation:drift 9s linear infinite;
-  }
-  .particles span:nth-child(1){left:8%; animation-delay:0s; animation-duration:8s;}
-  .particles span:nth-child(2){left:22%; animation-delay:1.5s; animation-duration:10s;}
-  .particles span:nth-child(3){left:38%; animation-delay:3s; animation-duration:7.5s;}
-  .particles span:nth-child(4){left:55%; animation-delay:0.7s; animation-duration:9.5s;}
-  .particles span:nth-child(5){left:70%; animation-delay:2.2s; animation-duration:8.5s;}
-  .particles span:nth-child(6){left:84%; animation-delay:4s; animation-duration:11s;}
-  .particles span:nth-child(7){left:94%; animation-delay:1s; animation-duration:9s;}
-  @keyframes drift{
-    0%{ transform:translateY(0) translateX(0); opacity:0; }
-    10%{ opacity:0.9; }
-    80%{ opacity:0.5; }
-    100%{ transform:translateY(-110vh) translateX(18px); opacity:0; }
-  }
+      /* particules dorees flottantes - effet futuriste */
+      .particles {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .particles span {
+        position: absolute;
+        bottom: -10px;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: var(--gold);
+        box-shadow: 0 0 8px 2px rgba(201, 162, 83, 0.8);
+        opacity: 0;
+        animation: drift 9s linear infinite;
+      }
+      .particles span:nth-child(1) {
+        left: 8%;
+        animation-delay: 0s;
+        animation-duration: 8s;
+      }
+      .particles span:nth-child(2) {
+        left: 22%;
+        animation-delay: 1.5s;
+        animation-duration: 10s;
+      }
+      .particles span:nth-child(3) {
+        left: 38%;
+        animation-delay: 3s;
+        animation-duration: 7.5s;
+      }
+      .particles span:nth-child(4) {
+        left: 55%;
+        animation-delay: 0.7s;
+        animation-duration: 9.5s;
+      }
+      .particles span:nth-child(5) {
+        left: 70%;
+        animation-delay: 2.2s;
+        animation-duration: 8.5s;
+      }
+      .particles span:nth-child(6) {
+        left: 84%;
+        animation-delay: 4s;
+        animation-duration: 11s;
+      }
+      .particles span:nth-child(7) {
+        left: 94%;
+        animation-delay: 1s;
+        animation-duration: 9s;
+      }
+      @keyframes drift {
+        0% {
+          transform: translateY(0) translateX(0);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.9;
+        }
+        80% {
+          opacity: 0.5;
+        }
+        100% {
+          transform: translateY(-110vh) translateX(18px);
+          opacity: 0;
+        }
+      }
 
-  /* carte 3D type tableau */
-  .card-wrap{
-    position:relative;
-    z-index:2;
-    perspective:1400px;
-    width:min(80vw,420px);
-    max-height:54vh;
-    aspect-ratio:4/5;
-    margin:0 auto;
-  }
-  .card{
-    position:relative;
-    width:100%;
-    height:100%;
-    border-radius:14px;
-    overflow:hidden;
-    transform:translateY(0) translateZ(0);
-    box-shadow:0 25px 60px -10px rgba(0,0,0,0.7), 0 0 0 1px rgba(201,162,83,0.35);
-    border:2px solid rgba(201,162,83,0.55);
-    animation:floatcard 7s ease-in-out infinite;
-  }
-  @keyframes floatcard{
-    0%,100%{ transform:translateY(0) translateZ(0); }
-    50%{ transform:translateY(-10px) translateZ(0); }
-  }
-  .card img{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    filter:brightness(0.96);
-    animation:kenburns 14s ease-in-out infinite alternate;
-  }
-  .card::after{
-    content:'';
-    position:absolute;
-    inset:0;
-    background:linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.18) 48%, transparent 64%);
-    background-size:220% 220%;
-    background-position:120% 0%;
-    animation:sweep 6s ease-in-out infinite;
-    pointer-events:none;
-  }
-  @keyframes sweep{
-    0%,55%{ background-position:120% 0%; }
-    100%{ background-position:-20% 100%; }
-  }
-  @keyframes kenburns{
-    from{transform:scale(1);}
-    to{transform:scale(1.1);}
-  }
+      /* carte 3D type tableau */
+      .card-wrap {
+        position: relative;
+        z-index: 2;
+        perspective: 1400px;
+        width: min(80vw, 420px);
+        max-height: 54vh;
+        aspect-ratio: 4/5;
+        margin: 0 auto;
+      }
+      .card {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        border-radius: 14px;
+        overflow: hidden;
+        transform: translateY(0) translateZ(0);
+        box-shadow:
+          0 25px 60px -10px rgba(0, 0, 0, 0.7),
+          0 0 0 1px rgba(201, 162, 83, 0.35);
+        border: 2px solid rgba(201, 162, 83, 0.55);
+        animation: floatcard 7s ease-in-out infinite;
+      }
+      @keyframes floatcard {
+        0%,
+        100% {
+          transform: translateY(0) translateZ(0);
+        }
+        50% {
+          transform: translateY(-10px) translateZ(0);
+        }
+      }
+      .card img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(0.96);
+        animation: kenburns 14s ease-in-out infinite alternate;
+      }
+      .card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          115deg,
+          transparent 30%,
+          rgba(255, 255, 255, 0.18) 48%,
+          transparent 64%
+        );
+        background-size: 220% 220%;
+        background-position: 120% 0%;
+        animation: sweep 6s ease-in-out infinite;
+        pointer-events: none;
+      }
+      @keyframes sweep {
+        0%,
+        55% {
+          background-position: 120% 0%;
+        }
+        100% {
+          background-position: -20% 100%;
+        }
+      }
+      @keyframes kenburns {
+        from {
+          transform: scale(1);
+        }
+        to {
+          transform: scale(1.1);
+        }
+      }
 
-  .overlay{
-    position:relative;
-    z-index:2;
-    text-align:center;
-    color:var(--cream);
-    padding:10px 8% 0;
-    width:100%;
-    opacity:1;
-  }
-  .section.visible .overlay{
-    opacity:1;
-    transform:translateY(0);
-  }
-  .eyebrow{
-    font-family:'Helvetica Neue', Arial, sans-serif;
-    letter-spacing:3px;
-    text-transform:uppercase;
-    font-size:13px;
-    color:var(--gold);
-    margin-bottom:14px;
-  }
-  h1{
-    font-size:clamp(32px,6vw,64px);
-    font-weight:400;
-    line-height:1.15;
-  }
-  h2{
-    font-size:clamp(20px,4.4vw,32px);
-    font-weight:400;
-    line-height:1.3;
-  }
-  p.tag{
-    font-family:'Helvetica Neue', Arial, sans-serif;
-    font-size:clamp(12px,1.6vw,15px);
-    letter-spacing:1px;
-    margin-top:10px;
-    color:rgba(247,243,236,0.8);
-  }
-  .hero h1{margin-bottom:6px;}
-  .hero .addr{
-    margin-top:22px;
-    font-family:'Helvetica Neue', Arial, sans-serif;
-    font-size:14px;
-    letter-spacing:2px;
-    color:var(--gold);
-    border-top:1px solid rgba(201,162,83,0.5);
-    padding-top:14px;
-    display:inline-block;
-  }
-  .end{
-    background:var(--navy);
-  }
-  .end h2{color:var(--cream);}
-  .end .heart{
-    font-size:13px;
-    letter-spacing:3px;
-    text-transform:uppercase;
-    color:var(--gold);
-    margin-top:20px;
-    font-family:'Helvetica Neue', Arial, sans-serif;
-  }
+      .overlay {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        color: var(--cream);
+        padding: 10px 8% 0;
+        width: 100%;
+      }
+      .overlay h1, .overlay h2, .overlay p.tag, .overlay .eyebrow, .overlay .addr, .overlay .heart {
+        opacity: 0;
+        transform: translateY(28px);
+        transition: opacity 0.7s ease, transform 0.7s ease;
+      }
+      .section.visible .overlay h1,
+      .section.visible .overlay h2,
+      .section.visible .overlay .eyebrow,
+      .section.visible .overlay .addr,
+      .section.visible .overlay .heart {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .section.visible .overlay p.tag {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.25s;
+      }
+      .eyebrow {
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        font-size: 13px;
+        color: var(--gold);
+        margin-bottom: 14px;
+      }
+      h1 {
+        font-size: clamp(32px, 6vw, 64px);
+        font-weight: 400;
+        line-height: 1.15;
+      }
+      h2 {
+        font-size: clamp(20px, 4.4vw, 32px);
+        font-weight: 400;
+        line-height: 1.3;
+      }
+      p.tag {
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        font-size: clamp(12px, 1.6vw, 15px);
+        letter-spacing: 1px;
+        margin-top: 10px;
+        color: rgba(247, 243, 236, 0.8);
+      }
+      .hero h1 {
+        margin-bottom: 6px;
+      }
+      .hero .addr {
+        margin-top: 22px;
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        font-size: 14px;
+        letter-spacing: 2px;
+        color: var(--gold);
+        border-top: 1px solid rgba(201, 162, 83, 0.5);
+        padding-top: 14px;
+        display: inline-block;
+      }
+      .end {
+        background: var(--navy);
+      }
+      .end h2 {
+        color: var(--cream);
+      }
+      .end .heart {
+        font-size: 13px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-top: 20px;
+        font-family: "Helvetica Neue", Arial, sans-serif;
+      }
 
-  /* section carte de localisation */
-  .map-card{
-    position:relative;
-    z-index:2;
-    width:min(90vw,480px);
-    border-radius:14px;
-    overflow:hidden;
-    border:2px solid rgba(201,162,83,0.55);
-    box-shadow:0 25px 60px -10px rgba(0,0,0,0.7), 0 0 0 1px rgba(201,162,83,0.35);
-  }
-  .map-card iframe{
-    display:block;
-    width:100%;
-    height:340px;
-    border:0;
-    filter:grayscale(0.15) contrast(1.05);
-  }
-  .map-pin{
-    position:absolute;
-    top:50%;left:50%;
-    width:14px;height:14px;
-    background:var(--gold);
-    border-radius:50%;
-    box-shadow:0 0 0 0 rgba(201,162,83,0.7);
-    transform:translate(-50%,-50%);
-    animation:pulse 2s infinite;
-    pointer-events:none;
-  }
-  @keyframes pulse{
-    0%{ box-shadow:0 0 0 0 rgba(201,162,83,0.7); }
-    70%{ box-shadow:0 0 0 18px rgba(201,162,83,0); }
-    100%{ box-shadow:0 0 0 0 rgba(201,162,83,0); }
-  }
-  .plan-card{
-    width:min(90vw,420px);
-  }
-  .plan-card svg{
-    display:block;
-    width:100%;
-    height:auto;
-  }
+      /* section carte de localisation */
+      .map-card {
+        position: relative;
+        z-index: 2;
+        width: min(90vw, 480px);
+        border-radius: 14px;
+        overflow: hidden;
+        border: 2px solid rgba(201, 162, 83, 0.55);
+        box-shadow:
+          0 25px 60px -10px rgba(0, 0, 0, 0.7),
+          0 0 0 1px rgba(201, 162, 83, 0.35);
+      }
+      .map-card iframe {
+        display: block;
+        width: 100%;
+        height: 340px;
+        border: 0;
+        filter: grayscale(0.15) contrast(1.05);
+      }
+      .map-pin {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 14px;
+        height: 14px;
+        background: var(--gold);
+        border-radius: 50%;
+        box-shadow: 0 0 0 0 rgba(201, 162, 83, 0.7);
+        transform: translate(-50%, -50%);
+        animation: pulse 2s infinite;
+        pointer-events: none;
+      }
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(201, 162, 83, 0.7);
+        }
+        70% {
+          box-shadow: 0 0 0 18px rgba(201, 162, 83, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(201, 162, 83, 0);
+        }
+      }
+      .plan-card {
+        width: min(90vw, 420px);
+      }
+      .plan-card svg {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
 
-  #controls{
-    position:fixed;
-    top:16px;
-    right:16px;
-    z-index:70;
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-  }
-  .ctrl-btn{
-    width:42px;
-    height:42px;
-    border-radius:50%;
-    border:1.5px solid rgba(201,162,83,0.6);
-    background:rgba(10,10,10,0.55);
-    color:var(--cream);
-    font-family:'Helvetica Neue', Arial, sans-serif;
-    font-size:17px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
-    backdrop-filter:blur(6px);
-    -webkit-backdrop-filter:blur(6px);
-    box-shadow:0 4px 14px rgba(0,0,0,0.4);
-    transition:transform 0.2s ease, border-color 0.3s ease;
-  }
-  .ctrl-btn:active{ transform:scale(0.9); }
-  .ctrl-btn.lang{ font-size:12px; letter-spacing:0.5px; font-weight:bold; font-family:'Helvetica Neue', Arial, sans-serif; }
-  #progress{
-    position:fixed;
-    top:0;left:0;
-    height:3px;
-    background:var(--gold);
-    z-index:60;
-    width:0%;
-    transition:width 0.2s linear;
-  }
-</style>
-</head>
-<body>
+      #controls {
+        position: fixed;
+        top: 16px;
+        right: 16px;
+        z-index: 70;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .ctrl-btn {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        border: 1.5px solid rgba(201, 162, 83, 0.6);
+        background: rgba(10, 10, 10, 0.55);
+        color: var(--cream);
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        font-size: 17px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+        transition:
+          transform 0.2s ease,
+          border-color 0.3s ease;
+      }
+      .ctrl-btn:active {
+        transform: scale(0.9);
+      }
+      .ctrl-btn.lang {
+        font-size: 12px;
+        letter-spacing: 0.5px;
+        font-weight: bold;
+        font-family: "Helvetica Neue", Arial, sans-serif;
+      }
+      #progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        background: var(--gold);
+        z-index: 60;
+        width: 0%;
+        transition: width 0.2s linear;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="progress"></div>
+    <div id="controls">
+      <button
+        id="soundBtn"
+        class="ctrl-btn"
+        aria-label="Attiva/disattiva audio"
+      >
+        🔇
+      </button>
+      <button
+        id="langBtn"
+        class="ctrl-btn lang"
+        aria-label="Traduci in francese"
+      >
+        FR
+      </button>
+    </div>
 
-<div id="progress"></div>
-<div id="controls">
-  <button id="soundBtn" class="ctrl-btn" aria-label="Attiva/disattiva audio">🔇</button>
-  <button id="langBtn" class="ctrl-btn lang" aria-label="Traduci in francese">FR</button>
-</div>
+    <audio
+      id="bgm"
+      src="assets/musique-italienne.mp3"
+      loop
+      preload="auto"
+      playsinline
+    ></audio>
 
-<audio id="bgm" src="assets/musique-italienne.mp3" loop preload="auto" playsinline></audio>
+    <section class="section" id="s7">
+      <div
+        class="bgblur"
+        style="background-image: url(&quot;assets/tramonto.jpg&quot;)"
+      ></div>
+      <div class="scrim"></div>
+      <div class="particles">
+        <span></span><span></span><span></span><span></span><span></span
+        ><span></span><span></span>
+      </div>
+      <div class="card-wrap">
+        <div class="card">
+          <img
+            src="assets/tramonto.jpg"
+            alt="Tramonto su Bisceglie"
+            style="object-position: center 88%"
+          />
+        </div>
+      </div>
+      <div class="overlay">
+        <h2
+          class="i18n"
+          data-fr="Et le soleil se couche<br>sur une autre journée parfaite"
+        >
+          E il sole tramonta<br />su un'altra giornata perfetta
+        </h2>
+      </div>
+    </section>
 
-<section class="section" id="s7">
-  <div class="bgblur" style="background-image:url('assets/tramonto.jpg')"></div>
-  <div class="scrim"></div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+    <section class="section" id="s3d">
+      <div class="bgblur" style="background-image: url(&quot;assets/spiaggia.jpg&quot;)"></div>
+      <div class="scrim"></div>
+      <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="card-wrap">
+        <div class="card">
+          <img src="assets/spiaggia.jpg" alt="Spiaggia vicino a Bisceglie" />
+        </div>
+      </div>
+      <div class="overlay">
+        <h2 class="i18n" data-fr="Eaux cristallines à deux pas">Acque cristalline a due passi</h2>
+      </div>
+    </section>
+
+    <section class="section" id="s3f">
+      <div class="bgblur" style="background-image: url(&quot;assets/porto-giorno.jpg&quot;)"></div>
+      <div class="scrim"></div>
+      <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="card-wrap">
+        <div class="card">
+          <img src="assets/porto-giorno.jpg" alt="Porto di Bisceglie di giorno" style="object-position: center 75%" />
+        </div>
+      </div>
+      <div class="overlay">
+        <h2 class="i18n" data-fr="Le port ancien, au cœur de la ville">Il porto antico, nel cuore della città</h2>
+        <p class="tag i18n" data-fr="À quelques minutes à pied de chez vous">A pochi minuti a piedi da casa</p>
+      </div>
+    </section>
+
+    <section class="section" id="sa2">
+      <div class="bgblur" style="background-image: url(&quot;assets/img-04.jpg&quot;)"></div>
+      <div class="scrim"></div>
+      <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="card-wrap">
+        <div class="card">
+          <img src="assets/img-04.jpg" alt="Terrasse avec vue sur le port" />
+        </div>
+      </div>
+      <div class="overlay">
+        <h2 class="i18n" data-fr="Déjeuner face au port">Pranzo affacciato sul porto</h2>
+      </div>
+    </section>
+
+    <section class="section" id="s3dd">
+      <div class="bgblur" style="background-image: url(&quot;assets/grotta-mare.jpg&quot;)"></div>
+      <div class="scrim"></div>
+      <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="card-wrap">
+        <div class="card">
+          <img src="assets/grotta-mare.jpg" alt="La mer à l'horizon" />
+        </div>
+      </div>
+      <div class="overlay">
+        <h2 class="i18n" data-fr="La mer à perte de vue">Il mare all'orizzonte</h2>
+      </div>
+    </section>
+
+            <section class="section" id="slungo">
+      <div class="bgblur" style="background-image: url(&quot;assets/lungomare-sera.jpg&quot;)"></div>
+      <div class="scrim"></div>
+      <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="card-wrap">
+        <div class="card">
+          <img src="assets/lungomare-sera.jpg" alt="Lungomare di sera" />
+        </div>
+      </div>
+      <div class="overlay">
+        <h2 class="i18n" data-fr="La promenade au coucher du soleil">Il lungomare al tramonto</h2>
+        <p class="tag i18n" data-fr="Lumières, musique et vie nocturne">Luci, musica e vita notturna</p>
+      </div>
+    </section>
+    <section class="section" id="sa16">
+      <div class="bgblur" style="background-image: url(&quot;assets/img-38.jpg&quot;)"></div>
+      <div class="scrim"></div>
+      <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="card-wrap">
+        <div class="card">
+          <img src="assets/img-38.jpg" alt="Porto di notte" />
+        </div>
+      </div>
+      <div class="overlay">
+        <h2 class="i18n" data-fr="Le port s'éveille sous les étoiles">Il porto si sveglia sotto le stelle</h2>
+        <p class="tag i18n" data-fr="Soirées de pêche et lumières sur l'eau">Serate di pesca e luci sull'acqua</p>
+      </div>
+    </section>
+
+    <section class="section" id="s1">
+      <div class="bgblur" style="background-image: url(&quot;assets/festa-porto.jpg&quot;)"></div>
+      <div class="scrim"></div>
+      <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="card-wrap">
+        <div class="card">
+          <img src="assets/festa-porto.jpg" alt="Festa nel porto di Bisceglie" />
+        </div>
+      </div>
+      <div class="overlay">
+        <h2 class="i18n" data-fr="Le cœur de la ville s'anime chaque soir">Il cuore della città si anima ogni sera</h2>
+        <p class="tag i18n" data-fr="À deux pas du port ancien">A pochi passi dal porto antico</p>
+      </div>
+    </section>
+
+    <section class="section" id="sa4">
+      <div class="bgblur" style="background-image: url(&quot;assets/img-06.jpg&quot;)"></div>
+      <div class="scrim"></div>
+      <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="card-wrap">
+        <div class="card">
+          <img src="assets/img-06.jpg" alt="Soirée animée au port" />
+        </div>
+      </div>
+      <div class="overlay">
+        <h2 class="i18n" data-fr="Les nuits de Bisceglie">Le notti di Bisceglie</h2>
+      </div>
+    </section>
+
+    <section class="section" id="s3c">
+      <div class="bgblur" style="background-image: url(&quot;assets/caffe-cornetto.jpg&quot;)"></div>
+      <div class="scrim"></div>
+      <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="card-wrap">
+        <div class="card">
+          <img src="assets/caffe-cornetto.jpg" alt="Petit déjeuner italien" />
+        </div>
+      </div>
+      <div class="overlay">
+        <h2 class="i18n" data-fr="Petit-déjeuner comme un vrai italien">Colazione come un vero italiano</h2>
+        <p class="tag i18n" data-fr="Cornetto, café et dolce vita">Cornetto, caffè e dolce vita</p>
+      </div>
+    </section>
+
+
+    <section class="section" id="scav">
+      <div class="bgblur" style="background-image: url(&quot;assets/cavalluccio.jpg&quot;)"></div>
+      <div class="scrim"></div>
+      <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="card-wrap">
+        <div class="card">
+          <img src="assets/cavalluccio.jpg" alt="Cavalluccio marino" />
+        </div>
+      </div>
+      <div class="overlay">
+        <h2 class="i18n" data-fr="Le symbole de Bisceglie">Il simbolo di Bisceglie</h2>
+        <p class="tag i18n" data-fr="L'hippocampe rouge veille sur le port">Il cavalluccio rosso veglia sul porto</p>
+      </div>
+    </section>
+    <section class="section" id="smon">
+      <div class="bgblur" style="background-image: url(&quot;assets/monumento.jpg&quot;)"></div>
+      <div class="scrim"></div>
+      <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="card-wrap">
+        <div class="card">
+          <img src="assets/monumento.jpg" alt="Monumento ai Caduti" />
+        </div>
+      </div>
+      <div class="overlay">
+        <h2 class="i18n" data-fr="Le monument aux morts, symbole de mémoire">Il Monumento ai Caduti</h2>
+        <p class="tag i18n" data-fr="Au cœur des jardins du centre historique">Nel cuore dei giardini del centro storico</p>
+      </div>
+    </section>
+    <section class="section" id="sa3">
+      <div class="bgblur" style="background-image: url(&quot;assets/img-05.jpg&quot;)"></div>
+      <div class="scrim"></div>
+      <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="card-wrap">
+        <div class="card">
+          <img src="assets/img-05.jpg" alt="Tour en pierre dans la campagne" />
+        </div>
+      </div>
+      <div class="overlay">
+        <h2 class="i18n" data-fr="La campagne des Pouilles à portée de main">La campagna pugliese a portata di mano</h2>
+      </div>
+    </section>
+
+    <section class="section" id="sa1">
+      <div class="bgblur" style="background-image: url(&quot;assets/img-03.jpg&quot;)"></div>
+      <div class="scrim"></div>
+      <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="card-wrap">
+        <div class="card">
+          <img src="assets/img-03.jpg" alt="Vue aérienne de Bisceglie" />
+        </div>
+      </div>
+      <div class="overlay">
+        <h2 class="i18n" data-fr="Bisceglie vue du ciel">Bisceglie vista dall'alto</h2>
+      </div>
+    </section>
+
+        <section class="section end" id="w1">
+      <div class="particles">
+        <span></span><span></span><span></span><span></span><span></span
+        ><span></span><span></span>
+      </div>
+      <div class="overlay">
+        <div class="eyebrow i18n" data-fr="Un peu de coulisses">
+          Un po' di dietro le quinte
+        </div>
+        <h2 class="i18n" data-fr="Tout a commencé ici">Tutto è iniziato qui</h2>
+      </div>
+    </section>
+
+    <section class="section" id="w2">
+      <div
+        class="bgblur"
+        style="background-image: url(&quot;assets/lavori-prima.jpg&quot;)"
+      ></div>
+      <div class="scrim"></div>
+      <div class="particles">
+        <span></span><span></span><span></span><span></span><span></span
+        ><span></span><span></span>
+      </div>
+      <div class="card-wrap">
+        <div class="card">
+          <img
+            src="assets/lavori-prima.jpg"
+            alt="L'appartamento prima dei lavori"
+          />
+        </div>
+      </div>
+      <div class="overlay">
+        <h2 class="i18n" data-fr="L'appartement avant les travaux">
+          L'appartamento prima dei lavori
+        </h2>
+      </div>
+    </section>
+    <section class="section" id="w7">
+      <div
+        class="bgblur"
+        style="background-image: url(&quot;assets/img-08.jpg&quot;)"
+      ></div>
+      <div class="scrim"></div>
+      <div class="particles">
+        <span></span><span></span><span></span><span></span><span></span
+        ><span></span><span></span>
+      </div>
+      <div class="card-wrap">
+        <div class="card">
+          <img src="assets/img-08.jpg" alt="Lavori - inizio cantiere" />
+        </div>
+      </div>
+      <div class="overlay">
+        <h2 class="i18n" data-fr="La couleur qui habille les murs">Il colore che veste le mura</h2>
+        <p class="tag i18n" data-fr="Chaque carreau, posé à la main">Ogni piastrella, posata a mano</p>
+      </div>
+    </section>
+
+        <section class="section" id="w3b">
+      <div class="bgblur" style="background-image: url(&quot;assets/img-24.jpg&quot;)"></div>
+      <div class="scrim"></div>
+      <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="card-wrap">
+        <div class="card">
+          <img src="assets/img-24.jpg" alt="Les planches de bois" />
+        </div>
+      </div>
+      <div class="overlay">
+        <h2 class="i18n" data-fr="Le bois, prêt à prendre sa place">Il legno, pronto a prendere il suo posto</h2>
+        <p class="tag i18n" data-fr="Chaque planche choisie avec soin">Ogni tavola scelta con cura</p>
+      </div>
+    </section>
+    <section class="section" id="w3">
+      <div
+        class="bgblur"
+        style="background-image: url(&quot;assets/lavori-legno.jpg&quot;)"
+      ></div>
+      <div class="scrim"></div>
+      <div class="particles">
+        <span></span><span></span><span></span><span></span><span></span
+        ><span></span><span></span>
+      </div>
+      <div class="card-wrap">
+        <div class="card">
+          <img src="assets/lavori-legno.jpg" alt="Lavorazione del legno" />
+        </div>
+      </div>
+      <div class="overlay">
+        <h2 class="i18n" data-fr="Chaque planche choisie avec soin">
+          Ogni tavola scelta con cura
+        </h2>
+      </div>
+    </section>
+
+    <section class="section" id="w4">
+      <div
+        class="bgblur"
+        style="background-image: url(&quot;assets/lavori-pittura.jpg&quot;)"
+      ></div>
+      <div class="scrim"></div>
+      <div class="particles">
+        <span></span><span></span><span></span><span></span><span></span
+        ><span></span><span></span>
+      </div>
+      <div class="card-wrap">
+        <div class="card">
+          <img
+            src="assets/lavori-pittura.jpg"
+            alt="Lavori di pittura nell'appartamento"
+          />
+        </div>
+      </div>
+      <div class="overlay">
+        <h2 class="i18n" data-fr="Heures de travail et de passion">
+          Ore di lavoro e passione
+        </h2>
+      </div>
+    </section>
+
+    <section class="section" id="w5">
+      <div
+        class="bgblur"
+        style="background-image: url(&quot;assets/lavori-portone.jpg&quot;)"
+      ></div>
+      <div class="scrim"></div>
+      <div class="particles">
+        <span></span><span></span><span></span><span></span><span></span
+        ><span></span><span></span>
+      </div>
+      <div class="card-wrap">
+        <div class="card">
+          <img
+            src="assets/lavori-portone.jpg"
+            alt="Restauro del portone in pietra"
+          />
+        </div>
+      </div>
+      <div class="overlay">
+        <h2 class="i18n" data-fr="Le portail en pierre restauré">
+          Il portone in pietra restaurato
+        </h2>
+      </div>
+    </section>
+
+
+    <section class="section" id="w8">
+      <div
+        class="bgblur"
+        style="background-image: url(&quot;assets/img-09.jpg&quot;)"
+      ></div>
+      <div class="scrim"></div>
+      <div class="particles">
+        <span></span><span></span><span></span><span></span><span></span
+        ><span></span><span></span>
+      </div>
+      <div class="card-wrap">
+        <div class="card">
+          <img src="assets/img-09.jpg" alt="Lavori - inizio 2" />
+        </div>
+      </div>
+      <div class="overlay">
+        <h2 class="i18n" data-fr="La mezzanine prend forme">Il soppalco prende forma</h2>
+        <p class="tag i18n" data-fr="Les rails posés, l'étage supérieur est né">Le rotaie in acciaio, il piano di sopra nasce</p>
+      </div>
+    </section>
+
+
+    
+
+    
+
+    <section class="section end" id="w6">
+      <div class="particles">
+        <span></span><span></span><span></span><span></span><span></span
+        ><span></span><span></span>
+      </div>
+      <div class="overlay">
+        <h2 class="i18n" data-fr="Et voici le résultat...">
+          Ed ecco il risultato...
+        </h2>
+      </div>
+    </section>
+
+    <section class="section hero end" id="s0">
+      <div class="particles">
+        <span></span><span></span><span></span><span></span><span></span
+        ><span></span><span></span>
+      </div>
+      <div class="overlay" style="opacity: 1; transform: none">
+        <div class="eyebrow">Bisceglie · Puglia</div>
+        <h1
+          class="i18n"
+          data-fr="Monolocale meublé<br>dans le centre historique"
+        >
+          Monolocale Arredato<br />nel Centro Storico
+        </h1>
+        <div class="addr">VIA PENDIO CAMPANILE, 15</div>
+      </div>
+    </section>
+
+    <section class="section" id="s4">
+      <div
+        class="bgblur"
+        style="background-image: url(&quot;assets/salotto1.jpg&quot;)"
+      ></div>
+      <div class="scrim"></div>
+      <div class="particles">
+        <span></span><span></span><span></span><span></span><span></span
+        ><span></span><span></span>
+      </div>
+      <div class="card-wrap">
+        <div class="card">
+          <img src="assets/salotto1.jpg" alt="Salotto del monolocale" />
+        </div>
+      </div>
+      <div class="overlay">
+        <h2 class="i18n" data-fr="Un nid douillet<br>dans le centre historique">
+          Un nido accogliente<br />nel centro storico
+        </h2>
+      </div>
+    </section>
+
+    <section class="section" id="s5">
+      <div
+        class="bgblur"
+        style="background-image: url(&quot;assets/salotto2.jpg&quot;)"
+      ></div>
+      <div class="scrim"></div>
+      <div class="particles">
+        <span></span><span></span><span></span><span></span><span></span
+        ><span></span><span></span>
+      </div>
+      <div class="card-wrap">
+        <div class="card">
+          <img src="assets/salotto2.jpg" alt="Soggiorno con soppalco" />
+        </div>
+      </div>
+      <div class="overlay">
+        <h2 class="i18n" data-fr="Chaque détail pensé<br>pour votre confort">
+          Ogni dettaglio pensato<br />per il tuo relax
+        </h2>
+        <p
+          class="tag i18n"
+          data-fr="Mezzanine · cuisine équipée · salle de bain privée"
+        >
+          Soppalco · cucina equipata · bagno privato
+        </p>
+      </div>
+    </section>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <section class="section" id="sa11">
+      <div
+        class="bgblur"
+        style="background-image: url(&quot;assets/img-14.jpg&quot;)"
+      ></div>
+      <div class="scrim"></div>
+      <div class="particles">
+        <span></span><span></span><span></span><span></span><span></span
+        ><span></span><span></span>
+      </div>
+      <div class="card-wrap">
+        <div class="card">
+          <img src="assets/img-14.jpg" alt="Appartamento - cucina" />
+        </div>
+      </div>
+      <div class="overlay">
+        <h2 class="i18n" data-fr="Le soppalco et la cuisine équipée">Il soppalco e la cucina equipata</h2>
+        <p class="tag i18n" data-fr="Tout le confort dans un espace bien pensé">Tutto il comfort in uno spazio ben pensato</p>
+      </div>
+    </section>
+
+    <section class="section" id="sa12">
+      <div
+        class="bgblur"
+        style="background-image: url(&quot;assets/img-16.jpg&quot;)"
+      ></div>
+      <div class="scrim"></div>
+      <div class="particles">
+        <span></span><span></span><span></span><span></span><span></span
+        ><span></span><span></span>
+      </div>
+      <div class="card-wrap">
+        <div class="card">
+          <img src="assets/img-16.jpg" alt="Appartamento - zona notte" />
+        </div>
+      </div>
+      <div class="overlay">
+        <h2 class="i18n" data-fr="La zone nuit en mezzanine">La zona notte in soppalco</h2>
+        <p class="tag i18n" data-fr="Lit double · canapé · espace privé">Letto matrimoniale · divano · spazio privato</p>
+      </div>
+    </section>
+
+    <section class="section" id="sa15">
+      <div
+        class="bgblur"
+        style="background-image: url(&quot;assets/img-31.jpg&quot;)"
+      ></div>
+      <div class="scrim"></div>
+      <div class="particles">
+        <span></span><span></span><span></span><span></span><span></span
+        ><span></span><span></span>
+      </div>
+      <div class="card-wrap">
+        <div class="card">
+          <img src="assets/img-31.jpg" alt="Il salotto" />
+        </div>
+      </div>
+      <div class="overlay">
+        <h2 class="i18n" data-fr="Le salon — détente garantie">Il salotto — relax garantito</h2>
+      </div>
+    </section>
+
+    
+
+    <section class="section end" id="sgast0">
   <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/tramonto.jpg" alt="Tramonto su Bisceglie" style="object-position:center 88%"></div></div>
   <div class="overlay">
-    <h2 class="i18n" data-fr="Et le soleil se couche<br>sur une autre journée parfaite">E il sole tramonta<br>su un'altra giornata perfetta</h2>
+    <div class="eyebrow i18n" data-fr="Les saveurs de Puglia">I sapori della Puglia</div>
+    <h2 class="i18n" data-fr="La cuisine du sud<br>à deux pas de chez vous">La cucina del Sud<br>a due passi da casa</h2>
   </div>
 </section>
 
-<section class="section" id="s1">
-  <div class="bgblur" style="background-image:url('assets/festa-porto.jpg')"></div>
+<section class="section" id="sgast1">
+  <div class="bgblur" style="background-image:url('assets/focaccia.jpg')"></div>
   <div class="scrim"></div>
   <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/festa-porto.jpg" alt="Festa nel porto di Bisceglie"></div></div>
+  <div class="card-wrap"><div class="card"><img src="assets/focaccia.jpg" alt="Focaccia barese"></div></div>
   <div class="overlay">
-    <h2 class="i18n" data-fr="Le cœur de la ville<br>s'anime chaque soir">Il cuore della città<br>si anima ogni sera</h2>
-    <p class="tag i18n" data-fr="À deux pas du port ancien">A pochi passi dal porto antico</p>
+    <h2 class="i18n" data-fr="La focaccia barese">La focaccia barese</h2>
+    <p class="tag i18n" data-fr="Croustillante, dorée, inoubliable">Croccante, dorata, indimenticabile</p>
   </div>
 </section>
 
-<section class="section" id="s2">
-  <div class="bgblur" style="background-image:url('assets/terrazza-serale.jpg')"></div>
+<section class="section" id="sgast2">
+  <div class="bgblur" style="background-image:url('assets/orecchiette.jpg')"></div>
   <div class="scrim"></div>
   <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/terrazza-serale.jpg" alt="Terrazza serale con luci"></div></div>
+  <div class="card-wrap"><div class="card"><img src="assets/orecchiette.jpg" alt="Orecchiette di Puglia"></div></div>
   <div class="overlay">
-    <h2 class="i18n" data-fr="Dîners sous les étoiles,<br>à deux pas de la maison">Cene sotto le stelle,<br>a due passi da casa</h2>
+    <h2 class="i18n" data-fr="Les orecchiette<br>aux cime di rapa">Le orecchiette<br>alle cime di rapa</h2>
+    <p class="tag i18n" data-fr="La pasta emblématique des Pouilles">La pasta simbolo della Puglia</p>
   </div>
 </section>
 
-<section class="section" id="s3">
-  <div class="bgblur" style="background-image:url('assets/caffe-porto.jpg')"></div>
+<section class="section" id="sgast3">
+  <div class="bgblur" style="background-image:url('assets/burrata.jpg')"></div>
   <div class="scrim"></div>
   <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/caffe-porto.jpg" alt="Caffè sul porto"></div></div>
+  <div class="card-wrap"><div class="card"><img src="assets/burrata.jpg" alt="Burrata pugliese"></div></div>
   <div class="overlay">
-    <h2 class="i18n" data-fr="Apéritif au bord de la mer">Aperitivo in riva al mare</h2>
-    <p class="tag i18n" data-fr="Le port touristique, à un pas de la porte">Il porto turistico, a un passo dalla porta</p>
+    <h2 class="i18n" data-fr="La burrata<br>de Andria">La burrata<br>di Andria</h2>
+    <p class="tag i18n" data-fr="Le fromage le plus doux du monde">Il formaggio più cremoso del mondo</p>
   </div>
 </section>
 
-<section class="section" id="s3b">
-  <div class="bgblur" style="background-image:url('assets/porto-tramonto.jpg')"></div>
+<section class="section" id="sgast4">
+  <div class="bgblur" style="background-image:url('assets/gelato.jpg')"></div>
   <div class="scrim"></div>
   <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/porto-tramonto.jpg" alt="Tramonto sul porto di Bisceglie"></div></div>
+  <div class="card-wrap"><div class="card"><img src="assets/gelato.jpg" alt="Gelato artigianale"></div></div>
   <div class="overlay">
-    <h2 class="i18n" data-fr="Un port de carte postale">Un porto da cartolina</h2>
-    <p class="tag i18n" data-fr="À quelques minutes à pied de chez vous">A pochi minuti a piedi da casa</p>
+    <h2 class="i18n" data-fr="Le gelato artisanal">Il gelato artigianale</h2>
+    <p class="tag i18n" data-fr="Douceur italienne à chaque coin de rue">Dolcezza italiana ad ogni angolo</p>
   </div>
 </section>
-
-<section class="section" id="s3c">
-  <div class="bgblur" style="background-image:url('assets/caffe-cornetto.jpg')"></div>
-  <div class="scrim"></div>
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/caffe-cornetto.jpg" alt="Cornetto e caffè nel centro storico"></div></div>
-  <div class="overlay">
-    <h2 class="i18n" data-fr="Petit-déjeuner comme un vrai italien">Colazione come un vero italiano</h2>
-    <p class="tag i18n" data-fr="Cornetto, café et dolce vita">Cornetto, caffè e dolce vita</p>
-  </div>
-</section>
-
-<section class="section" id="s3d">
-  <div class="bgblur" style="background-image:url('assets/spiaggia.jpg')"></div>
-  <div class="scrim"></div>
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/spiaggia.jpg" alt="Spiaggia vicino a Bisceglie"></div></div>
-  <div class="overlay">
-    <h2 class="i18n" data-fr="Eaux cristallines à deux pas">Acque cristalline a due passi</h2>
-  </div>
-</section>
-
-<section class="section" id="s3dd">
-  <div class="bgblur" style="background-image:url('assets/grotta-mare.jpg')"></div>
-  <div class="scrim"></div>
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/grotta-mare.jpg" alt="Vista sul mare da una grotta in pietra"></div></div>
-  <div class="overlay">
-    <h2 class="i18n" data-fr="Des recoins secrets<br>au bord de la mer">Angoli segreti<br>sul mare</h2>
-  </div>
-</section>
-
-<section class="section" id="s3e">
-  <div class="bgblur" style="background-image:url('assets/monumento.jpg')"></div>
-  <div class="scrim"></div>
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/monumento.jpg" alt="Monumento ai Caduti, Bisceglie" style="object-position:center 70%"></div></div>
-  <div class="overlay">
-    <h2 class="i18n" data-fr="Promenades entre histoire et nature">Passeggiate tra storia e natura</h2>
-  </div>
-</section>
-
-<section class="section" id="s3f">
-  <div class="bgblur" style="background-image:url('assets/porto-giorno.jpg')"></div>
-  <div class="scrim"></div>
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/porto-giorno.jpg" alt="Porto di Bisceglie di giorno" style="object-position:center 75%"></div></div>
-  <div class="overlay">
-    <h2 class="i18n" data-fr="Le port ancien, le jour">Il porto antico, di giorno</h2>
-  </div>
-</section>
-
-<section class="section" id="s3g">
-  <div class="bgblur" style="background-image:url('assets/cavalluccio.jpg')"></div>
-  <div class="scrim"></div>
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/cavalluccio.jpg" alt="Statua del cavalluccio marino sul porto" style="object-position:center 65%"></div></div>
-  <div class="overlay">
-    <h2 class="i18n" data-fr="Le symbole du port">Il simbolo del porto</h2>
-  </div>
-</section>
-
-<section class="section" id="s3h">
-  <div class="bgblur" style="background-image:url('assets/lungomare-sera.jpg')"></div>
-  <div class="scrim"></div>
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/lungomare-sera.jpg" alt="Lungomare illuminato la sera" style="object-position:center 70%"></div></div>
-  <div class="overlay">
-    <h2 class="i18n" data-fr="Promenades au coucher du soleil<br>sur le front de mer">Passeggiate al tramonto<br>sul lungomare</h2>
-  </div>
-</section>
-
-<section class="section" id="s0b">
-  <div class="bgblur" style="background-image:url('assets/torre-pietra.jpg')"></div>
-  <div class="scrim"></div>
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/torre-pietra.jpg" alt="Torre in pietra vicino a Bisceglie"></div></div>
-  <div class="overlay">
-    <h2 class="i18n" data-fr="À l'aventure dans la campagne des Pouilles">All'avventura nella campagna pugliese</h2>
-  </div>
-</section>
-
-<section class="section end" id="w1">
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="overlay">
-    <div class="eyebrow i18n" data-fr="Un peu de coulisses">Un po' di dietro le quinte</div>
-    <h2 class="i18n" data-fr="Tout a commencé ici">Tutto è iniziato qui</h2>
-  </div>
-</section>
-
-<section class="section" id="w2">
-  <div class="bgblur" style="background-image:url('assets/lavori-prima.jpg')"></div>
-  <div class="scrim"></div>
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/lavori-prima.jpg" alt="L'appartamento prima dei lavori"></div></div>
-  <div class="overlay">
-    <h2 class="i18n" data-fr="L'appartement avant les travaux">L'appartamento prima dei lavori</h2>
-  </div>
-</section>
-
-<section class="section" id="w3">
-  <div class="bgblur" style="background-image:url('assets/lavori-legno.jpg')"></div>
-  <div class="scrim"></div>
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/lavori-legno.jpg" alt="Lavorazione del legno"></div></div>
-  <div class="overlay">
-    <h2 class="i18n" data-fr="Chaque planche choisie avec soin">Ogni tavola scelta con cura</h2>
-  </div>
-</section>
-
-<section class="section" id="w4">
-  <div class="bgblur" style="background-image:url('assets/lavori-pittura.jpg')"></div>
-  <div class="scrim"></div>
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/lavori-pittura.jpg" alt="Lavori di pittura nell'appartamento"></div></div>
-  <div class="overlay">
-    <h2 class="i18n" data-fr="Heures de travail et de passion">Ore di lavoro e passione</h2>
-  </div>
-</section>
-
-<section class="section" id="w5">
-  <div class="bgblur" style="background-image:url('assets/lavori-portone.jpg')"></div>
-  <div class="scrim"></div>
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/lavori-portone.jpg" alt="Restauro del portone in pietra"></div></div>
-  <div class="overlay">
-    <h2 class="i18n" data-fr="Le portail en pierre restauré">Il portone in pietra restaurato</h2>
-  </div>
-</section>
-
-<section class="section" id="w7">
-  <div class="bgblur" style="background-image:url('assets/img-08.jpg')"></div>
-  <div class="scrim"></div>
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/img-08.jpg" alt="Lavori - inizio cantiere"></div></div>
-  <div class="overlay"></div>
-</section>
-
-<section class="section" id="w8">
-  <div class="bgblur" style="background-image:url('assets/img-09.jpg')"></div>
-  <div class="scrim"></div>
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/img-09.jpg" alt="Lavori - inizio 2"></div></div>
-  <div class="overlay"></div>
-</section>
-
-<section class="section" id="w9">
-  <div class="bgblur" style="background-image:url('assets/img-10.jpg')"></div>
-  <div class="scrim"></div>
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/img-10.jpg" alt="Lavori - cantiere"></div></div>
-  <div class="overlay"></div>
-</section>
-
-<section class="section" id="w10">
-  <div class="bgblur" style="background-image:url('assets/img-11.jpg')"></div>
-  <div class="scrim"></div>
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/img-11.jpg" alt="Lavori - avanzamento"></div></div>
-  <div class="overlay"></div>
-</section>
-
-<section class="section" id="w11">
-  <div class="bgblur" style="background-image:url('assets/img-24.jpg')"></div>
-  <div class="scrim"></div>
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/img-24.jpg" alt="Lavori - dettaglio"></div></div>
-  <div class="overlay"></div>
-</section>
-
-<section class="section" id="w12">
-  <div class="bgblur" style="background-image:url('assets/img-30.jpg')"></div>
-  <div class="scrim"></div>
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/img-30.jpg" alt="Lavori - fine cantiere"></div></div>
-  <div class="overlay"></div>
-</section>
-
-<section class="section end" id="w6">
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="overlay">
-    <h2 class="i18n" data-fr="Et voici le résultat...">Ed ecco il risultato...</h2>
-  </div>
-</section>
-
-<section class="section hero end" id="s0">
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="overlay" style="opacity:1;transform:none;">
-    <div class="eyebrow">Bisceglie · Puglia</div>
-    <h1 class="i18n" data-fr="Monolocale meublé<br>dans le centre historique">Monolocale Arredato<br>nel Centro Storico</h1>
-    <div class="addr">VIA PENDIO CAMPANILE, 15</div>
-  </div>
-</section>
-
-<section class="section" id="s4">
-  <div class="bgblur" style="background-image:url('assets/salotto1.jpg')"></div>
-  <div class="scrim"></div>
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/salotto1.jpg" alt="Salotto del monolocale"></div></div>
-  <div class="overlay">
-    <h2 class="i18n" data-fr="Un nid douillet<br>dans le centre historique">Un nido accogliente<br>nel centro storico</h2>
-  </div>
-</section>
-
-<section class="section" id="s5">
-  <div class="bgblur" style="background-image:url('assets/salotto2.jpg')"></div>
-  <div class="scrim"></div>
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/salotto2.jpg" alt="Soggiorno con soppalco"></div></div>
-  <div class="overlay">
-    <h2 class="i18n" data-fr="Chaque détail pensé<br>pour votre confort">Ogni dettaglio pensato<br>per il tuo relax</h2>
-    <p class="tag i18n" data-fr="Mezzanine · cuisine équipée · salle de bain privée">Soppalco · cucina equipata · bagno privato</p>
-  </div>
-</section>
-
-<section class="section" id="sa1">
-  <div class="bgblur" style="background-image:url('assets/img-03.jpg')"></div>
-  <div class="scrim"></div>
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/img-03.jpg" alt="Appartamento - vista"></div></div>
-  <div class="overlay">
-    <h2 class="i18n" data-fr="L'appartement rénové">L'appartamento rinnovato</h2>
-  </div>
-</section>
-
-<section class="section" id="sa2">
-  <div class="bgblur" style="background-image:url('assets/img-04.jpg')"></div>
-  <div class="scrim"></div>
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/img-04.jpg" alt="Appartamento - dettaglio"></div></div>
-  <div class="overlay"></div>
-</section>
-
-<section class="section" id="sa3">
-  <div class="bgblur" style="background-image:url('assets/img-05.jpg')"></div>
-  <div class="scrim"></div>
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/img-05.jpg" alt="Appartamento - interno"></div></div>
-  <div class="overlay"></div>
-</section>
-
-<section class="section" id="sa3b">
-  <div class="bgblur" style="background-image:url('assets/img-05b.jpg')"></div>
-  <div class="scrim"></div>
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/img-05b.jpg" alt="Appartamento - interno 2"></div></div>
-  <div class="overlay"></div>
-</section>
-
-<section class="section" id="sa4">
-  <div class="bgblur" style="background-image:url('assets/img-06.jpg')"></div>
-  <div class="scrim"></div>
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/img-06.jpg" alt="Appartamento - ambiente"></div></div>
-  <div class="overlay"></div>
-</section>
-
-<section class="section" id="sa5">
-  <div class="bgblur" style="background-image:url('assets/img-07.jpg')"></div>
-  <div class="scrim"></div>
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/img-07.jpg" alt="Appartamento - vista 2"></div></div>
-  <div class="overlay"></div>
-</section>
-
-<section class="section" id="sa10">
-  <div class="bgblur" style="background-image:url('assets/img-13.jpg')"></div>
-  <div class="scrim"></div>
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/img-13.jpg" alt="Appartamento - zona notte"></div></div>
-  <div class="overlay">
-    <h2 class="i18n" data-fr="Chaque espace pensé pour vous">Ogni spazio pensato per voi</h2>
-  </div>
-</section>
-
-<section class="section" id="sa11">
-  <div class="bgblur" style="background-image:url('assets/img-14.jpg')"></div>
-  <div class="scrim"></div>
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/img-14.jpg" alt="Appartamento - cucina"></div></div>
-  <div class="overlay"></div>
-</section>
-
-<section class="section" id="sa12">
-  <div class="bgblur" style="background-image:url('assets/img-16.jpg')"></div>
-  <div class="scrim"></div>
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/img-16.jpg" alt="Appartamento - bagno"></div></div>
-  <div class="overlay"></div>
-</section>
-
-
-<section class="section" id="sa15">
-  <div class="bgblur" style="background-image:url('assets/img-31.jpg')"></div>
-  <div class="scrim"></div>
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/img-31.jpg" alt="Appartamento - vicolo storico"></div></div>
-  <div class="overlay"></div>
-</section>
-
-<section class="section" id="sa16">
-  <div class="bgblur" style="background-image:url('assets/img-38.jpg')"></div>
-  <div class="scrim"></div>
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/img-38.jpg" alt="Appartamento - panorama"></div></div>
-  <div class="overlay">
-    <h2 class="i18n" data-fr="Votre havre à Bisceglie">Il vostro angolo a Bisceglie</h2>
-  </div>
-</section>
-
-<section class="section" id="s6">
-  <div class="bgblur" style="background-image:url('assets/porto-notte.jpg')"></div>
-  <div class="scrim"></div>
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="card-wrap"><div class="card"><img src="assets/porto-notte.jpg" alt="Bisceglie by night"></div></div>
-  <div class="overlay">
-    <h2>Bisceglie by night</h2>
-  </div>
-</section>
-
 
 <section class="section end" id="smap">
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="overlay" style="padding-bottom:18px;">
-    <div class="eyebrow i18n" data-fr="Où se trouve">Dove si trova</div>
-    <h2 class="i18n" data-fr="Au cœur du centre historique">Nel cuore del centro storico</h2>
-  </div>
-  <div class="map-card">
-    <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=16.495,41.236,16.514,41.247&layer=mapnik&marker=41.2412,16.5043" loading="lazy"></iframe>
-  </div>
-</section>
+      <div class="particles">
+        <span></span><span></span><span></span><span></span><span></span
+        ><span></span><span></span>
+      </div>
+      <div class="overlay" style="padding-bottom: 18px">
+        <div class="eyebrow i18n" data-fr="Où se trouve">Dove si trova</div>
+        <h2 class="i18n" data-fr="Au cœur du centre historique">
+          Nel cuore del centro storico
+        </h2>
+      </div>
+      <div class="map-card">
+        <iframe
+          src="https://www.openstreetmap.org/export/embed.html?bbox=16.495,41.236,16.514,41.247&layer=mapnik&marker=41.2412,16.5043"
+          loading="lazy"
+        ></iframe>
+      </div>
+    </section>
 
-<section class="section end" id="s8">
-  <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="overlay" style="opacity:1;transform:none;">
-    <h2 class="i18n" data-fr="Bisceglie vous attend">Bisceglie ti aspetta</h2>
-    <div class="heart i18n" data-fr="Mer cristalline et histoire en une seule destination">Mare cristallino e storia in un'unica meta</div>
-  </div>
-</section>
+                <section class="section" id="s8">
+      <div class="particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
 
-<script>
-  const sections = document.querySelectorAll('.section');
-  const observer = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){ e.target.classList.add('visible'); }
-      else { e.target.classList.remove('visible'); }
-    });
-  }, {threshold:0.45});
-  sections.forEach(s=>observer.observe(s));
+      <!-- lampe qui se balance -->
+      <div class="lamp-wrap">
+        <div class="lamp-wire"></div>
+        <div class="lamp-body">
+          <div class="lamp-glow"></div>
+        </div>
+        <div class="lamp-cone"></div>
+      </div>
 
-  // Defilement automatique sans clic (base sur Date.now, insensible au throttling de rAF)
-  const scrollEl = document.scrollingElement || document.documentElement;
-  const totalDuration = 120000; // ms pour parcourir toute la page une fois
-  const pauseAtEnd = 3200;
-  let startTime = Date.now();
-  let paused = false;
+      <!-- petit drapeau italien -->
+      <div class="mini-flag">
+        <div class="mf-g"></div>
+        <div class="mf-w"></div>
+        <div class="mf-r"></div>
+        <!-- surbrillance au passage de la lampe -->
+        <div class="mf-shine"></div>
+      </div>
 
-  function tick(){
-    const maxScroll = scrollEl.scrollHeight - window.innerHeight;
-    const elapsed = Date.now() - startTime;
+      <div class="s8-content">
+        <svg class="sign-svg" viewBox="0 0 760 160" xmlns="http://www.w3.org/2000/svg" aria-label="Bisceglie ti aspetta">
+          <text class="sign-text" x="50%" y="130" text-anchor="middle"
+            font-family="'Dancing Script', cursive" font-size="130" font-weight="700">Bisceglie</text>
+        </svg>
+        <div class="s8-sub i18n" data-fr="Mer cristalline et histoire en une seule destination">Mare cristallino e storia in un\'unica meta</div>
+      </div>
 
-    if(elapsed <= totalDuration){
-      if(!paused && !window.__pauseAutoscroll){
-        const progress = Math.min(elapsed/totalDuration, 1);
-        scrollEl.scrollTop = progress * maxScroll;
-        document.getElementById('progress').style.width = (progress*100)+'%';
+      <style>
+        #s8 { position:relative; background:#06080f; overflow:hidden; }
+
+        /* ---- LAMPE ---- */
+        .lamp-wrap {
+          position:absolute;
+          top:0; left:50%;
+          transform:translateX(-50%);
+          transform-origin:top center;
+          animation:swing 3s ease-in-out infinite alternate;
+          z-index:6;
+          width:0;
+        }
+        @keyframes swing {
+          0%   { transform:translateX(-50%) rotate(-35deg); }
+          100% { transform:translateX(-50%) rotate(35deg); }
+        }
+
+        .lamp-wire {
+          position:absolute;
+          top:0; left:-1px;
+          width:2px; height:90px;
+          background:linear-gradient(to bottom,#777,#444);
+        }
+        .lamp-body {
+          position:absolute;
+          top:82px; left:-22px;
+          width:44px; height:28px;
+          background:linear-gradient(160deg,#555,#222);
+          border-radius:6px 6px 14px 14px;
+          border:1.5px solid #888;
+          box-shadow:0 0 0 2px #333;
+          overflow:hidden;
+        }
+        .lamp-glow {
+          position:absolute;
+          bottom:2px; left:50%; transform:translateX(-50%);
+          width:20px; height:10px;
+          background:radial-gradient(ellipse, #fffbe0 0%, #ffe066 60%, transparent 100%);
+          border-radius:50%;
+          box-shadow:0 0 14px 6px rgba(255,220,80,0.9);
+        }
+
+        /* cone de lumiere sous la lampe */
+        .lamp-cone {
+          position:absolute;
+          top:108px; left:-120px;
+          width:240px; height:320px;
+          background:linear-gradient(to bottom,
+            rgba(255,230,100,0.28) 0%,
+            rgba(255,230,100,0.08) 60%,
+            transparent 100%);
+          clip-path:polygon(50% 0%, 0% 100%, 100% 100%);
+          pointer-events:none;
+        }
+
+        /* ---- DRAPEAU ---- */
+        .mini-flag {
+          position:absolute;
+          bottom:22%;
+          left:50%; transform:translateX(-50%);
+          width:160px; height:100px;
+          border-radius:3px;
+          overflow:hidden;
+          display:flex;
+          box-shadow:0 4px 24px rgba(0,0,0,0.7), 0 0 0 2px rgba(255,255,255,0.1);
+          z-index:4;
+        }
+        .mf-g { flex:1; background:#007a3a; filter:brightness(0.35); transition:filter 0.15s; }
+        .mf-w { flex:1; background:#e8e8e8; filter:brightness(0.35); transition:filter 0.15s; }
+        .mf-r { flex:1; background:#c8102e; filter:brightness(0.35); transition:filter 0.15s; }
+
+        /* surbrillance animée sur le drapeau au passage */
+        .mf-shine {
+          position:absolute; inset:0;
+          background:linear-gradient(105deg,
+            transparent 0%,
+            rgba(255,245,180,0.0) 20%,
+            rgba(255,245,180,0.7) 50%,
+            rgba(255,245,180,0.0) 80%,
+            transparent 100%);
+          animation:flagshine 3s ease-in-out infinite alternate;
+          pointer-events:none;
+        }
+        @keyframes flagshine {
+          0%   { transform:translateX(-160px); opacity:0; }
+          30%  { opacity:0; }
+          45%  { opacity:1; }
+          55%  { opacity:1; }
+          70%  { opacity:0; }
+          100% { transform:translateX(160px); opacity:0; }
+        }
+
+        /* eclairage progressif du drapeau synchronise */
+        @keyframes flaglit {
+          0%,25%  { filter:brightness(0.35); }
+          42%,58% { filter:brightness(1.4) saturate(1.3); }
+          75%,100%{ filter:brightness(0.35); }
+        }
+        .mf-g { animation:flaglit 3s ease-in-out infinite alternate; animation-delay:0s; }
+        .mf-w { animation:flaglit 3s ease-in-out infinite alternate; animation-delay:0.1s; }
+        .mf-r { animation:flaglit 3s ease-in-out infinite alternate; animation-delay:0.2s; }
+
+        /* ---- TEXTE ---- */
+        .s8-content {
+          position:relative; z-index:5; text-align:center;
+          margin-top:auto; padding-bottom:5vh;
+        }
+        .sign-svg {
+          width: min(700px, 90vw);
+          height: auto;
+          overflow: visible;
+        }
+        .sign-text {
+          fill: transparent;
+          stroke: #fff;
+          stroke-width: 1.8px;
+          filter: drop-shadow(0 0 8px rgba(201,162,83,0.6));
+          stroke-dasharray: 4500;
+          stroke-dashoffset: 4500;
+        }
+        .sign-text.animate {
+          animation: signdraw 4s ease-out forwards;
+        }
+        @keyframes signdraw {
+          0%   { stroke-dashoffset: 4500; fill: transparent; }
+          80%  { stroke-dashoffset: 0;    fill: transparent; }
+          100% { stroke-dashoffset: 0;    fill: rgba(255,255,255,0.92); }
+        }
+        .s8-sub2 {
+          margin-top: -0.5rem;
+          font-family: "Dancing Script", cursive;
+          font-size: clamp(20px, 3vw, 36px);
+          color: var(--gold);
+          letter-spacing: 0.12em;
+          opacity: 0;
+          animation: fadein 1s ease 3.8s forwards;
+        }
+        @keyframes fadein { to { opacity: 1; } }
+        .s8-sub {
+          margin-top:0.8rem;
+          font-family:"Helvetica Neue",Arial,sans-serif;
+          font-size:clamp(11px,1.5vw,15px);
+          letter-spacing:3px; text-transform:uppercase;
+          color:var(--gold);
+        }
+      </style>
+    </section>
+
+    <script>
+      const sections = document.querySelectorAll(".section");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("visible");
+            } else {
+              e.target.classList.remove("visible");
+            }
+          });
+        },
+        { threshold: 0.45 },
+      );
+      sections.forEach((s) => observer.observe(s));
+
+      // Animation signature déclenchée à l'arrivée sur s8, disparition douce au départ
+      const signText = document.querySelector('.sign-text');
+      const sub2 = document.querySelector('.s8-sub2');
+      const s8obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            // arrivée : lancer le dessin
+            signText.style.transition = '';
+            signText.style.opacity = '';
+            signText.classList.remove('animate');
+            void signText.offsetWidth;
+            signText.classList.add('animate');
+            if (sub2) {
+              sub2.style.transition = '';
+              sub2.style.animation = 'none';
+              void sub2.offsetWidth;
+              sub2.style.animation = 'fadein 1s ease 3.8s forwards';
+              sub2.style.opacity = 0;
+            }
+          } else {
+            // départ : disparition douce en 1.2s
+            signText.style.transition = 'opacity 1.2s ease';
+            signText.style.opacity = '0';
+            if (sub2) {
+              sub2.style.transition = 'opacity 1.2s ease';
+              sub2.style.opacity = '0';
+            }
+            // reset pour la prochaine fois
+            setTimeout(() => {
+              signText.classList.remove('animate');
+              signText.style.transition = '';
+              signText.style.opacity = '';
+              if (sub2) { sub2.style.transition = ''; sub2.style.opacity = '0'; sub2.style.animation = 'none'; }
+            }, 1300);
+          }
+        });
+      }, { threshold: 0.4 });
+      if (document.getElementById('s8')) s8obs.observe(document.getElementById('s8'));
+
+      // Defilement automatique sans clic (base sur Date.now, insensible au throttling de rAF)
+      const scrollEl = document.scrollingElement || document.documentElement;
+      const totalDuration = 240000; // 4 minutes pour parcourir toute la page // ms pour parcourir toute la page une fois
+      const pauseAtEnd = 6000;
+      let startTime = Date.now();
+      let paused = false;
+
+      function tick() {
+        const maxScroll = scrollEl.scrollHeight - window.innerHeight;
+        const elapsed = Date.now() - startTime;
+
+        if (elapsed <= totalDuration) {
+          if (!paused && !window.__pauseAutoscroll) {
+            const progress = Math.min(elapsed / totalDuration, 1);
+            scrollEl.scrollTop = progress * maxScroll;
+            document.getElementById("progress").style.width =
+              progress * 100 + "%";
+          }
+        } else if (elapsed > totalDuration + pauseAtEnd) {
+          // remontee douce vers le haut sur 4 secondes
+          const scrollStart = scrollEl.scrollTop;
+          const resetDuration = 4000;
+          const resetStart = Date.now();
+          function smoothReset() {
+            const p = Math.min((Date.now() - resetStart) / resetDuration, 1);
+            const ease = 1 - Math.pow(1 - p, 3);
+            scrollEl.scrollTop = scrollStart * (1 - ease);
+            if (p < 1) { requestAnimationFrame(smoothReset); }
+            else { startTime = Date.now(); }
+          }
+          requestAnimationFrame(smoothReset);
+        }
       }
-    } else if(elapsed > totalDuration + pauseAtEnd){
-      startTime = Date.now();
-      scrollEl.scrollTop = 0;
-    }
-  }
-  setInterval(tick, 40);
+      setInterval(tick, 40);
 
-  // Pause de l'auto-scroll si l'utilisateur prend la main (scroll/touch manuel)
-  let userTimeout;
-  function onUserScroll(){
-    if(!paused){
-      paused = true;
-    }
-    clearTimeout(userTimeout);
-    userTimeout = setTimeout(()=>{
-      paused = false;
-      // reprend la progression a partir de la position actuelle
-      const maxScroll = scrollEl.scrollHeight - window.innerHeight;
-      const currentProgress = scrollEl.scrollTop / maxScroll;
-      startTime = Date.now() - currentProgress * totalDuration;
-    }, 2500);
-  }
-  window.addEventListener('wheel', onUserScroll, {passive:true});
-  window.addEventListener('touchmove', onUserScroll, {passive:true});
+      // Pause de l'auto-scroll si l'utilisateur prend la main (scroll/touch manuel)
+      let userTimeout;
+      function onUserScroll() {
+        if (!paused) {
+          paused = true;
+        }
+        clearTimeout(userTimeout);
+        userTimeout = setTimeout(() => {
+          paused = false;
+          // reprend la progression a partir de la position actuelle
+          const maxScroll = scrollEl.scrollHeight - window.innerHeight;
+          const currentProgress = scrollEl.scrollTop / maxScroll;
+          startTime = Date.now() - currentProgress * totalDuration;
+        }, 8000); // 8s avant de reprendre apres scroll manuel
+      }
+      window.addEventListener("wheel", onUserScroll, { passive: true });
+      window.addEventListener("touchmove", onUserScroll, { passive: true });
 
-  // Musique de fond : bouton marche / arret
-  const bgm = document.getElementById('bgm');
-  const soundBtn = document.getElementById('soundBtn');
-  bgm.volume = 0.55;
-  let soundOn = false;
+      // Musique de fond : bouton marche / arret
+      const bgm = document.getElementById("bgm");
+      const soundBtn = document.getElementById("soundBtn");
+      bgm.volume = 0.55;
+      let soundOn = false;
 
-  function setSoundUI(){
-    soundBtn.textContent = soundOn ? '🔊' : '🔇';
-  }
-  function tryAutoplay(){
-    bgm.play().then(()=>{ soundOn = true; setSoundUI(); }).catch(()=>{ soundOn = false; setSoundUI(); });
-  }
-  tryAutoplay();
-  setSoundUI();
+      function setSoundUI() {
+        soundBtn.textContent = soundOn ? "🔊" : "🔇";
+      }
+      function tryAutoplay() {
+        bgm
+          .play()
+          .then(() => {
+            soundOn = true;
+            setSoundUI();
+          })
+          .catch(() => {
+            soundOn = false;
+            setSoundUI();
+          });
+      }
+      tryAutoplay();
+      setSoundUI();
 
-  soundBtn.addEventListener('click', ()=>{
-    if(soundOn){
-      bgm.pause();
-      soundOn = false;
-    } else {
-      bgm.play().catch(()=>{});
-      soundOn = true;
-    }
-    setSoundUI();
-  });
+      soundBtn.addEventListener("click", () => {
+        if (soundOn) {
+          bgm.pause();
+          soundOn = false;
+        } else {
+          bgm.play().catch(() => {});
+          soundOn = true;
+        }
+        setSoundUI();
+      });
 
-  // Bouton de traduction italien / francais
-  const langBtn = document.getElementById('langBtn');
-  const i18nEls = document.querySelectorAll('.i18n');
-  let isFrench = false;
+      // Bouton de traduction italien / francais
+      const langBtn = document.getElementById("langBtn");
+      const i18nEls = document.querySelectorAll(".i18n");
+      let isFrench = false;
 
-  i18nEls.forEach(el=>{ el.dataset.it = el.innerHTML; });
+      i18nEls.forEach((el) => {
+        el.dataset.it = el.innerHTML;
+      });
 
-  langBtn.addEventListener('click', ()=>{
-    isFrench = !isFrench;
-    i18nEls.forEach(el=>{
-      el.innerHTML = isFrench ? el.dataset.fr : el.dataset.it;
-    });
-    langBtn.textContent = isFrench ? 'IT' : 'FR';
-    document.documentElement.lang = isFrench ? 'fr' : 'it';
-  });
-</script>
-
-</body>
+      langBtn.addEventListener("click", () => {
+        isFrench = !isFrench;
+        i18nEls.forEach((el) => {
+          el.innerHTML = isFrench ? el.dataset.fr : el.dataset.it;
+        });
+        langBtn.textContent = isFrench ? "IT" : "FR";
+        document.documentElement.lang = isFrench ? "fr" : "it";
+      });
+    </script>
+  </body>
 </html>
